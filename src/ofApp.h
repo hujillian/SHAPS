@@ -22,4 +22,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		void move();
+		// hello
 };
