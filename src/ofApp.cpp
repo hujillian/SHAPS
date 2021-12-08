@@ -4,6 +4,8 @@
 void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetWindowShape(1280, 900);
+
+	arduino.connect("COM3", 57600);
 }
 
 //--------------------------------------------------------------

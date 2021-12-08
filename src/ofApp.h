@@ -6,6 +6,17 @@
 class ofApp : public ofBaseApp{
 
 	public:
+		ofArduino arduino;
+		bool bSetupArduino;
+
+		void setupArduino(const int & version);
+		void digitalPinChanged(const int & pinNum);
+		void analogPinChanged(const int & pinNum);
+		void updateArduino();
+
+		string buttonState;
+		string potValue;
+
 		void setup();
 		void update();
 		void draw();
