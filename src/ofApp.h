@@ -22,6 +22,8 @@ class ofApp : public ofBaseApp{
 		float xPos;
 		float yPos;
 
+		circle spawn_c;
+
 		void setup();
 		void update();
 		void draw();

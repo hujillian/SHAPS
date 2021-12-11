@@ -8,33 +8,33 @@ public:
 	float speedY;
 	float speedX;
 
-
-	void setup();
-	void update();
-	void draw();
+	//void setup();
+	//void update();
+	//void draw();
 
 	ofVec2f m_force;
 	ofVec2f m_position;
 	ofVec2f m_direction;
 
-	shapes(int startX, int startY);
+	shapes();
+	//shapes(int startX, int startY);
 	~shapes();
 };
 
 class circle : public shapes {
 public:
 	ofColor colorOne;
-	void draw();
+	void Draw();
 };
 
 class rectangle : public shapes {
 public:
 	ofColor colorTwo;
-	void draw();
+	void Draw();
 };
 
 class triangle : public shapes {
 public:
 	ofColor colorThree;
-	void draw();
+	void Draw();
 };
