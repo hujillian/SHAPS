@@ -17,6 +17,10 @@ class ofApp : public ofBaseApp{
 		string buttonState;
 		string potValue;
 
+		//ofRectangle player;
+		float xPos;
+		float yPos;
+
 		void setup();
 		void update();
 		void draw();

@@ -6,6 +6,11 @@ void ofApp::setup(){
 	ofSetWindowShape(1280, 900);
 
 	arduino.connect("COM3", 57600);
+
+	xPos = 640;
+	yPos = 700;
+
+	//player(xPos, yPos, 20, 20);
 }
 
 //--------------------------------------------------------------
@@ -23,16 +28,22 @@ void ofApp::draw(){
 	ofBackgroundGradient(colorOne, colorTwo, OF_GRADIENT_LINEAR);
 
 	//*************Start Screen Layout Design*************//
-	ofSetColor(174, 217, 251);
+
+	/*ofSetColor(174, 217, 251);
 	ofDrawRectRounded(550, 600, 200, 80, 5);
 
 	ofSetColor(174, 217, 251);
-	ofDrawRectRounded(350, 200, 600, 280, 5);
+	ofDrawRectRounded(350, 200, 600, 280, 5);*/
+
+	//*************Game Screen Layout Design*************//
+	ofDrawRectangle(xPos, yPos, 20, 20);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	if (key == OF_KEY_LEFT) {
+		
+	}
 }
 
 //--------------------------------------------------------------
