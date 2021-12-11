@@ -26,11 +26,11 @@ shapes::~shapes()
 void circle::Draw()
 {
 	colorOne = (174, 218, 251);
-	xPos = 350;
+	xPos = 370;
 	yPos = 100;
 
-	ofSetColor(colorOne);
-	ofDrawCircle(xPos,yPos,10);
+	ofSetColor(174, 218, 251);
+	ofDrawCircle(xPos,yPos,30);
 
 }
 
