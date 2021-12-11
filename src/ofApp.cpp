@@ -15,7 +15,19 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	//*************Background*************//
 
+	ofColor colorOne(236, 246, 254);		//lightblue
+	ofColor colorTwo(254, 254, 254);		//white
+
+	ofBackgroundGradient(colorOne, colorTwo, OF_GRADIENT_LINEAR);
+
+	//*************Start Screen Layout Design*************//
+	ofSetColor(174, 217, 251);
+	ofDrawRectRounded(550, 600, 200, 80, 5);
+
+	ofSetColor(174, 217, 251);
+	ofDrawRectRounded(350, 200, 600, 280, 5);
 }
 
 //--------------------------------------------------------------
