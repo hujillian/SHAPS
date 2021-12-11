@@ -2,6 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
+	//https://openframeworks.cc/ofBook/chapters/game_design.html
+
 	ofSetVerticalSync(true);
 	ofSetWindowShape(1280, 900);
 
