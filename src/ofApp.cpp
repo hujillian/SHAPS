@@ -36,13 +36,23 @@ void ofApp::draw(){
 	ofDrawRectRounded(350, 200, 600, 280, 5);*/
 
 	//*************Game Screen Layout Design*************//
-	ofDrawRectangle(xPos, yPos, 20, 20);
+	ofSetColor(174, 217, 251);
+	ofDrawRectangle(xPos, yPos, 40, 40);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	if (key == OF_KEY_LEFT) {
-		
+		xPos = xPos - 10;
+	}
+	if (key == OF_KEY_RIGHT) {
+		xPos = xPos + 10;
+	}	
+	if (key == OF_KEY_UP) {
+		yPos = yPos - 10;
+	}	
+	if (key == OF_KEY_DOWN) {
+		yPos = yPos + 10;
 	}
 }
 
