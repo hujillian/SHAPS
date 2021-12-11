@@ -7,10 +7,10 @@ void ofApp::setup(){
 
 	arduino.connect("COM3", 57600);
 
+	//start position for player
 	xPos = 640;
 	yPos = 700;
 
-	//player(xPos, yPos, 20, 20);
 }
 
 //--------------------------------------------------------------
@@ -36,12 +36,23 @@ void ofApp::draw(){
 	ofDrawRectRounded(350, 200, 600, 280, 5);*/
 
 	//*************Game Screen Layout Design*************//
+
+	ofSetColor(174, 237, 251);
+	ofDrawRectangle(326, 0, 100, 900);
+
+	ofSetColor(251, 174, 192);
+	ofDrawRectangle(526, 0, 100, 900);
+
+	ofSetColor(186, 251, 174);
+	ofDrawRectangle(726, 0, 100, 900);
+
 	ofSetColor(174, 217, 251);
 	ofDrawRectangle(xPos, yPos, 40, 40);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+	//*************To Move (left, right, up, down)*************//
 	if (key == OF_KEY_LEFT) {
 		xPos = xPos - 10;
 	}
