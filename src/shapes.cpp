@@ -26,7 +26,7 @@ shapes::~shapes()
 void circle::Draw()
 {
 	colorOne = (174, 218, 251);
-	xPos = 370;
+	xPos = 375;
 	yPos = 100;
 
 	ofSetColor(174, 218, 251);
@@ -34,12 +34,21 @@ void circle::Draw()
 
 }
 
-void rectangle::Draw()
-{
-	//fg
-}
-
 void triangle::Draw()
 {
-	//dk
+	colorThree = (174, 218, 251);
+	xPos = 570;
+	yPos = 100;
+
+	ofSetColor(251, 175, 174);
+	ofDrawTriangle(0,0,0,0,0,0);
+}
+
+void rectangle::Draw()
+{
+	xPos = 730;
+	yPos = 100;
+
+	ofSetColor(140, 236, 149);
+	ofDrawRectangle(xPos, yPos, 90, 40);
 }

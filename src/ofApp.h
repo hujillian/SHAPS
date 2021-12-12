@@ -23,6 +23,7 @@ class ofApp : public ofBaseApp{
 		float yPos;
 
 		circle spawn_c;
+		rectangle spawn_r;
 
 		void setup();
 		void update();

@@ -40,16 +40,17 @@ void ofApp::draw(){
 
 	//*************Game Screen Layout Design*************//
 
-	ofSetColor(174, 237, 251);			//red
+	ofSetColor(174, 237, 251);			//blue
 	ofDrawRectangle(326, 0, 100, 900);
 
-	ofSetColor(251, 174, 192);			//blue
+	ofSetColor(251, 174, 192);			//red
 	ofDrawRectangle(526, 0, 100, 900);
 
 	ofSetColor(186, 251, 174);			//green
 	ofDrawRectangle(726, 0, 100, 900);
 
 	spawn_c.Draw();
+	spawn_r.Draw();
 
 	ofSetColor(174, 217, 251);			//player
 	ofDrawRectangle(xPos, yPos, 40, 40);		//xpos and ypos change from keyPressed, thus they are currently used to change position
