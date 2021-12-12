@@ -17,6 +17,9 @@ class ofApp : public ofBaseApp{
 
 		string buttonState;
 		string potValue;
+
+		string game_state;
+		int score;
 		
 		//player position 
 		float xPos;
