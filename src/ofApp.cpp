@@ -42,12 +42,16 @@ void ofApp::draw(){
 	if (game_state == "start") {
 		//*************Start Screen Layout Design*************//
 
-	/*ofSetColor(174, 217, 251);
+	ofSetColor(174, 217, 251);
 	ofDrawRectRounded(550, 600, 200, 80, 5);
 
 	ofSetColor(174, 217, 251);
-	ofDrawRectRounded(350, 200, 600, 280, 5);*/
-		game_state = "game";		//change this so if player presses a button to start, it means game_state = game
+	ofDrawRectRounded(350, 200, 600, 280, 5); 
+
+	ofScale(200, 200, 200);
+	ofSetColor(240, 240, 2400);
+	ofDrawBitmapString("START", 550, 650);
+		
 	}
 	else if (game_state == "game") {
 		//*************Game Screen Layout Design*************//
@@ -62,6 +66,7 @@ void ofApp::draw(){
 		ofDrawRectangle(726, 0, 100, 900);
 
 		spawn_c.Draw();
+		spawn_c.Move();
 		spawn_r.Draw();
 
 		ofSetColor(174, 217, 251);			//player
@@ -77,6 +82,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
+	if (key == OF_KEY_SHIFT) {
+		game_state = "game";		//change this so if player presses a button to start, it means game_state = game
+	}
+
 	//*************To Move (left, right, up, down)*************//
 	if (key == OF_KEY_LEFT) {
 		xPos = xPos - 10;

@@ -9,13 +9,10 @@ shapes::shapes()
 	speedY = 0;
 }
 
-void shapes::update()
-{
-}
 
-/*shapes::shapes(int startX, int startY) {
+/*shapes::shapes(int xPos, int yPos) {
 
-	m_position = ofVec2f(startX, startY);
+	m_position = ofVec2f(xPos, yPos);
 	//m_direction = ofVec2f(ofRandom(-2.0, 2.0), ofRandom(-2.0, 2.0)); // direction that the particles move in is random
 		//down, each shape has specific direction
 	m_force = ofVec2f(0, 0); // starting force on the particles is 0
@@ -32,6 +29,10 @@ circle::circle()
 {
 	xPos = 375;
 	yPos = 100;
+
+	m_position = ofVec2f(xPos, yPos);
+	m_direction = ofVec2f(xPos, 200);
+	m_force = ofVec2f(0, 200);
 }
 circle::~circle()
 {
@@ -43,7 +44,21 @@ void circle::Draw()
 
 	ofSetColor(174, 218, 251);
 	ofDrawCircle(xPos,yPos,30);
+	m_force = ofVec2f(0, 300);
+}
 
+void circle::Move()
+{
+
+	m_position += m_direction; // add the direction to the position value to move the particle
+	m_direction += m_force; // add the force to the direction to change the speed and direction of its motion
+	
+}
+
+void circle::Update()
+{
+	//m_position += m_direction; // add the direction to the position value to move the particle
+	//m_direction += m_force; // add the force to the direction to change the speed and direction of its motion
 }
 
 //--------------------------------------------------------------

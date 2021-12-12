@@ -19,6 +19,8 @@ class ofApp : public ofBaseApp{
 		string potValue;
 
 		string game_state;
+		//string start = "START";
+		//ofTrueTypeFont start;
 		int score;
 		
 		//player position 

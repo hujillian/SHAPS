@@ -9,7 +9,7 @@ public:
 	float speedX;
 
 	//void setup();
-	void update();
+	//void update();
 	//void draw();
 
 	ofVec2f m_force;
@@ -17,7 +17,7 @@ public:
 	ofVec2f m_direction;
 
 	shapes();
-	//shapes(int startX, int startY);
+	//shapes(int xPos, int yPos);
 	~shapes();
 };
 
@@ -25,6 +25,8 @@ class circle : public shapes {
 public:
 	ofColor colorOne;
 	void Draw();
+	void Move();
+	void Update();
 	circle();
 	~circle();
 };
