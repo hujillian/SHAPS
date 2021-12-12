@@ -9,7 +9,7 @@ public:
 	float speedX;
 
 	//void setup();
-	//void update();
+	void update();
 	//void draw();
 
 	ofVec2f m_force;
@@ -25,16 +25,21 @@ class circle : public shapes {
 public:
 	ofColor colorOne;
 	void Draw();
+	circle();
+	~circle();
 };
 
 class rectangle : public shapes {
 public:
 	ofColor colorTwo;
 	void Draw();
+	rectangle();
+	~rectangle();
 };
 
 class triangle : public shapes {
 public:
 	ofColor colorThree;
 	void Draw();
+
 };

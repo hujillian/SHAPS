@@ -1,12 +1,16 @@
 #include "shapes.h"
 
-
+//--------------------------------------------------------------
 shapes::shapes()
 {
 	xPos = 0;
 	yPos = 0;
 	speedX = 0;
 	speedY = 0;
+}
+
+void shapes::update()
+{
 }
 
 /*shapes::shapes(int startX, int startY) {
@@ -23,32 +27,52 @@ shapes::~shapes()
 	//deconstructor
 }
 
-void circle::Draw()
+//--------------------------------------------------------------
+circle::circle()
 {
-	colorOne = (174, 218, 251);
 	xPos = 375;
 	yPos = 100;
+}
+circle::~circle()
+{
+	//deconstructor
+}
+void circle::Draw()
+{
+	colorOne = (174, 218, 251);			//trying to assign colour
 
 	ofSetColor(174, 218, 251);
 	ofDrawCircle(xPos,yPos,30);
 
 }
 
-void triangle::Draw()
+//--------------------------------------------------------------
+rectangle::rectangle()
 {
-	colorThree = (174, 218, 251);
-	xPos = 570;
+	xPos = 730;
 	yPos = 100;
+}
 
-	ofSetColor(251, 175, 174);
-	ofDrawTriangle(0,0,0,0,0,0);
+rectangle::~rectangle()
+{
+	//deconstructor
 }
 
 void rectangle::Draw()
 {
-	xPos = 730;
-	yPos = 100;
-
 	ofSetColor(140, 236, 149);
 	ofDrawRectangle(xPos, yPos, 90, 40);
 }
+
+//--------------------------------------------------------------
+void triangle::Draw()
+{
+	/*colorThree = (174, 218, 251);
+	xPos = 570;
+	yPos = 100;
+
+	ofSetColor(251, 175, 174);
+	ofDrawTriangle(0,0,0,0,0,0);*/
+}
+
+
