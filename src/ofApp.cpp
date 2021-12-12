@@ -16,6 +16,20 @@ void ofApp::setup(){
 
 	game_state = "start";
 	score = 0;
+
+	// fonts
+	titleFont.load("raleway-bold.ttf", 120);
+	subtitleFont.load("raleway-bold.ttf", 42);
+
+	// start page
+	shapsRectX = 350;
+	shapsRectY = 200;
+	shapsRectWidth = 600;
+	shapsRectHeight = 280;
+	startRectX = 550;
+	startRectY = 600;
+	startRectWidth = 200;
+	startRectHeight = 80;
 }
 
 //--------------------------------------------------------------
@@ -42,15 +56,14 @@ void ofApp::draw(){
 	if (game_state == "start") {
 		//*************Start Screen Layout Design*************//
 
-	ofSetColor(174, 217, 251);
-	ofDrawRectRounded(550, 600, 200, 80, 5);
+		ofSetColor(174, 217, 251);
+		ofDrawRectRounded(shapsRectX, shapsRectY, shapsRectWidth, shapsRectHeight, 5);
+		ofDrawRectRounded(startRectX, startRectY, startRectWidth, startRectHeight, 5);
 
-	ofSetColor(174, 217, 251);
-	ofDrawRectRounded(350, 200, 600, 280, 5); 
+		ofSetColor(240, 240, 240);
+		titleFont.drawString("SHAPS!", shapsRectX + 15, shapsRectY + 200);
+		subtitleFont.drawString("START", startRectX + 10, startRectY + 60);
 
-	ofScale(200, 200, 200);
-	ofSetColor(240, 240, 2400);
-	ofDrawBitmapString("START", 550, 650);
 		
 	}
 	else if (game_state == "game") {
@@ -84,7 +97,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 
 	if (key == OF_KEY_SHIFT) {
-		game_state = "game";		//change this so if player presses a button to start, it means game_state = game
+
 	}
 
 	//*************To Move (left, right, up, down)*************//
@@ -119,7 +132,24 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+	if (game_state == "start") {
+		// If player presses the SHAPS! button
+		if ((x > shapsRectX) && (x < shapsRectX + shapsRectWidth) &&
+			(y > shapsRectY) && (y < shapsRectY + shapsRectHeight)) {
+				// instructions?
+			}
+		// If player presses the START button
+		else if ((x > startRectX) && (x < startRectX + startRectWidth) &&
+				(y > startRectY) && (y < startRectY + startRectHeight)) {
+			game_state = "game";
+		}
+	}
+	else if (game_state == "game") {
 
+	}
+	else if (game_state == "end") {
+
+	}
 }
 
 //--------------------------------------------------------------

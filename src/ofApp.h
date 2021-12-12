@@ -22,6 +22,20 @@ class ofApp : public ofBaseApp{
 		//string start = "START";
 		//ofTrueTypeFont start;
 		int score;
+
+		// fonts
+		ofTrueTypeFont titleFont;
+		ofTrueTypeFont subtitleFont;
+
+		// start page
+		int shapsRectX;
+		int shapsRectY;
+		int shapsRectWidth;
+		int shapsRectHeight;
+		int startRectX;
+		int startRectY;
+		int startRectWidth;
+		int startRectHeight;
 		
 		//player position 
 		float xPos;
