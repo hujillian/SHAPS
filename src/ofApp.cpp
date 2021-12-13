@@ -27,24 +27,24 @@ void ofApp::setup(){
 	arrowA = 255;
 	arrowAInc = false;
 	drawRight = false;
-	drawLeft = false;
+drawLeft = false;
 
-	// fonts
-	titleFont.load("Bouncy.otf", 120);
-	subtitleFont.load("Bouncy-Thin.otf", 42);
-	textFont.load("raleway-bold.ttf", 20);
+// fonts
+titleFont.load("Bouncy.otf", 120);
+subtitleFont.load("Bouncy-Thin.otf", 42);
+textFont.load("raleway-bold.ttf", 20);
 
-	// colours
-	lightBlue = ofColor(236, 246, 254);
-	offWhite = ofColor(240, 240, 240);
-	mediumBlue = ofColor(150, 200, 242);
-	
+// colours
+lightBlue = ofColor(236, 246, 254);
+offWhite = ofColor(240, 240, 240);
+mediumBlue = ofColor(150, 200, 242);
+
 }
 
 //-------------------------------------------------------------- update
-void ofApp::update(){
+void ofApp::update() {
 
-	//starting page -- arrow flashes update
+	// STARTING PAGE -- arrow flashes update
 	if (gameState == Constants::START) {
 		// flashing arrow
 		if (arrowAInc) {
@@ -61,7 +61,8 @@ void ofApp::update(){
 		}
 
 	}
-	//game page -- if shapes are collected, they grow bigger (then shrink again)
+
+	// GAME PAGE -- if shapes are collected, they grow bigger (then shrink again)
 	else if (gameState == Constants::GAME) {
 
 		// UPDATE CIRCLES
@@ -123,58 +124,64 @@ void ofApp::update(){
 
 			rectangles[i].update();
 		}
-		
 
-		// create shapes based on times of the song
-		if ((song.getPositionMS() > 9920 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 23744 - Constants::SHAPE_MOVE_TIME)) {
-			spawnTriangles();
-			if ((song.getPositionMS() > 22744)) {
+
+		// -------- CREATING SHAPES
+		if ((song.getPositionMS() <= 0) &&
+			(song.getPositionMS() < 21300 - Constants::SHAPE_MOVE_TIME)){
+			// nothing happens
+		}
+		else if (song.getPositionMS() < 24044 - Constants::SHAPE_MOVE_TIME) {
+			spawnTriangles(4.2);
+		}
+		else if (song.getPositionMS() < 39509 - Constants::SHAPE_MOVE_TIME) {
+			spawnCircles(2.3);
+			if ((song.getPositionMS() > 21044)) {
 				drawLeft = true;
 			}
 		}
-		else if ((song.getPositionMS() > 23744 - Constants::SHAPE_MOVE_TIME) && 
-			(song.getPositionMS() < 39509 - Constants::SHAPE_MOVE_TIME)) {
-			spawnCircles();
+		else if (song.getPositionMS() < 54968 - Constants::SHAPE_MOVE_TIME) {
+			spawnTriangles(4.6);
+			spawnCircles(2.3);
 		}
-		else if ((song.getPositionMS() > 39509 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 55168 - Constants::SHAPE_MOVE_TIME)) {
-			spawnTriangles();
-			spawnCircles();
-			if ((song.getPositionMS() > 54000)) {
+		else if (song.getPositionMS() < 79505 - Constants::SHAPE_MOVE_TIME) {
+			spawnRects(2.94);
+			if ((song.getPositionMS() > 53168)) {
 				drawLeft = false;
 				drawRight = true;
 			}
 		}
-		else if ((song.getPositionMS() > 55168 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 78805 - Constants::SHAPE_MOVE_TIME)) {
-			spawnRects();
+		else if (song.getPositionMS() < 110293 - Constants::SHAPE_MOVE_TIME) {
+			spawnTriangles(4.6);
+			spawnCircles(2.3);
+			if ((song.getPositionMS() > 75305)) {
+				drawRight = false;
+				drawLeft = true;
+			}
 		}
-		else if ((song.getPositionMS() > 78805 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 110293 - Constants::SHAPE_MOVE_TIME)) {
-			spawnTriangles();
-			spawnCircles();
+		else if (song.getPositionMS() < 134208 - Constants::SHAPE_MOVE_TIME) {
+			spawnRects(2.94);
+			spawnTriangles(5.88);
+			if ((song.getPositionMS() > 112293)) {
+				drawLeft = false;
+				drawRight = true;
+			}
 		}
-		else if ((song.getPositionMS() > 110293 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 134208 - Constants::SHAPE_MOVE_TIME)) {
-			spawnRects();
-			spawnTriangles();
-		}
-		else if ((song.getPositionMS() > 134208 - Constants::SHAPE_MOVE_TIME) &&
-			(song.getPositionMS() < 165000 - Constants::SHAPE_MOVE_TIME)) {
-			spawnTriangles();
-			spawnCircles();
-			spawnRects();
+		else if (song.getPositionMS() < 165000 - Constants::SHAPE_MOVE_TIME) {
+			spawnTriangles(9.2);
+			spawnRects(4.6);
 		}
 
 
-		// end game when song ends
-		if (song.getPosition() == 1.0f) {
+
+		// ENG GAME
+		if (song.getPosition() == 1.0f) { // song ends
 			arrowRightPos = ofVec2f(80, Constants::PLAY_AGAIN_Y - 20);
 			gameState = Constants::END;
 		}
 	}
-	//end game state
+
+	// ------------ END GAME PAGE
 	else if (gameState == Constants::END) {
 		// flashing arrow
 		if (arrowAInc) {
@@ -193,24 +200,24 @@ void ofApp::update(){
 }
 
 //-------------------------------------------------------------- Spawning 
-void ofApp::spawnCircles() {
-	if (ofGetElapsedTimef() > circleTimer + 4) {
+void ofApp::spawnCircles(int spawnTime) {
+	if (ofGetElapsedTimef() > circleTimer + spawnTime) {
 		circle newCircle;
 		circles.push_back(newCircle);
 		circleTimer = ofGetElapsedTimef();
 	}
 }
 
-void ofApp::spawnTriangles() {
-	if (ofGetElapsedTimef() > triangleTimer + 4) {
+void ofApp::spawnTriangles(int spawnTime) {
+	if (ofGetElapsedTimef() > triangleTimer + spawnTime) {
 		triangle newTriangle;
 		triangles.push_back(newTriangle);
 		triangleTimer = ofGetElapsedTimef();
 	}
 }
 
-void ofApp::spawnRects() {
-	if (ofGetElapsedTimef() > rectTimer + 2) {
+void ofApp::spawnRects(int spawnTime) {
+	if (ofGetElapsedTimef() > rectTimer + spawnTime) {
 		rectangle newRect;
 		rectangles.push_back(newRect);
 		rectTimer = ofGetElapsedTimef();
@@ -306,6 +313,7 @@ void ofApp::keyPressed(int key) {
 			else if (arrowRightPos == ofVec2f(80, Constants::START_RECT_Y - 20)) {
 				gameState = Constants::GAME;
 				song.play();
+				arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
 			}
 		}
 		if (key == OF_KEY_UP) {
@@ -336,6 +344,7 @@ void ofApp::keyPressed(int key) {
 		if (key == 13) { // ENTER key
 			gameState = Constants::GAME;
 			song.play();
+			arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
 		}
 	}
 }
@@ -408,6 +417,7 @@ void ofApp::mousePressed(int x, int y, int button){
 			gameState = Constants::GAME;
 			//song.setPosition(0.0f); // restart song
 			song.play();
+			arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
 		}
 	}
 	//*************Game Screen Layout Design*************//
@@ -420,7 +430,7 @@ void ofApp::mousePressed(int x, int y, int button){
 		if ((x > Constants::PLAY_AGAIN_X) && (x < Constants::PLAY_AGAIN_X + Constants::PLAY_AGAIN_WIDTH) &&
 			(y > Constants::PLAY_AGAIN_Y) && (y < Constants::PLAY_AGAIN_Y + Constants::PLAY_AGAIN_HEIGHT)) {
 			gameState = Constants::GAME;
-			//song.setPosition(0.0f); // restart song
+			song.setPosition(0.0f); // restart song
 			song.play();
 		}
 	}

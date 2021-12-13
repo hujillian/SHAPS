@@ -1,14 +1,14 @@
 ﻿  ofApp.cpp
   Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(61): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(83): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(101): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(255): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(258): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(261): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(333): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(345): warning C4018: '<': signed/unsigned mismatch
-c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(357): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(69): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(91): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(109): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(269): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(272): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(275): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(354): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(366): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(378): warning C4018: '<': signed/unsigned mismatch
   SHAPS.vcxproj -> C:\of_v0.11.2_vs2017_release\apps\myApps\SHAPS\bin\SHAPS_debug.exe
   
   	                   2	C:\of_v0.11.2_vs2017_release\libs\fmod\lib\vs\Win32\

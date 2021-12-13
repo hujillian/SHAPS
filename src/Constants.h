@@ -21,9 +21,9 @@ namespace Constants {
 	// end page constants
 	const int SCORE_X = 270;
 	const int SCORE_Y = 400;
-	const int PLAY_AGAIN_X = 430;
+	const int PLAY_AGAIN_X = 420;
 	const int PLAY_AGAIN_Y = 550;
-	const int PLAY_AGAIN_WIDTH = 350;
+	const int PLAY_AGAIN_WIDTH = 360;
 	const int PLAY_AGAIN_HEIGHT = 100;
 
 	// game constants
@@ -33,5 +33,5 @@ namespace Constants {
 	const int LANE2_X = 526;
 	const int LANE3_X = 726;
 	const int LANE_WIDTH = 100;
-	const int SHAPE_MOVE_TIME = 8750;
+	const int SHAPE_MOVE_TIME = 9000;
 }

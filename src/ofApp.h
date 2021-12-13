@@ -75,9 +75,9 @@ class ofApp : public ofBaseApp{
 		void circlePressed();
 		void trianglePressed();
 		void rectPressed();
-		void spawnCircles();
-		void spawnTriangles();
-		void spawnRects();
+		void spawnCircles(int spawnTime);
+		void spawnTriangles(int spawnTime);
+		void spawnRects(int spawnTime);
 
 		void keyPressed(int key);
 		void keyReleased(int key);
