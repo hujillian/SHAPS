@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "ofEvents.h"
+#include <chrono>
+#include <thread>
 #include "shapes.h"
 
 class ofApp : public ofBaseApp{
@@ -41,8 +43,11 @@ class ofApp : public ofBaseApp{
 		float xPos;
 		float yPos;
 
-		circle spawn_c;
-		rectangle spawn_r;
+		//circle spawn_c;
+		//rectangle spawn_r;
+		std::vector<circle> circles;
+		vector<rectangle> rectangles;
+		vector<triangle> triangles;
 
 		void setup();
 		void update();

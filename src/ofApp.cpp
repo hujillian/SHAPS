@@ -21,7 +21,7 @@ void ofApp::setup(){
 	titleFont.load("raleway-bold.ttf", 120);
 	subtitleFont.load("raleway-bold.ttf", 42);
 
-	// start page
+	// start page variables
 	shapsRectX = 350;
 	shapsRectY = 200;
 	shapsRectWidth = 600;
@@ -34,14 +34,33 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	/*if (game_state == "start") {
+	if (game_state == "start") {
 
 	}
 	else if (game_state == "game") {
+		// update circles
+		for (int i = 0; i < circles.size(); i++) {
+			circles[i].update();
+			// if shape moves offscreen, delete it
+			if (circles[i].yPos > ofGetScreenHeight()) {
+				//circles[i].erase(circles.begin() + i);
+				//delete circles[i];
+			}
+		}
+
+		// update rectangles
+		for (int i = 0; i < rectangles.size(); i++) {
+			rectangles[i].update();
+		}
+
+		// update triangles
+		for (int i = 0; i < triangles.size(); i++) {
+			triangles[i].update();
+		}
 	}
 	else if (game_state == "end") {
 
-	}*/
+	}
 }
 
 //--------------------------------------------------------------
@@ -69,21 +88,35 @@ void ofApp::draw(){
 	else if (game_state == "game") {
 		//*************Game Screen Layout Design*************//
 
-		ofSetColor(174, 237, 251);			//blue
+		ofSetColor(251, 180, 200);			//red
 		ofDrawRectangle(326, 0, 100, 900);
 
-		ofSetColor(251, 174, 192);			//red
+		ofSetColor(174, 237, 251);			//blue
 		ofDrawRectangle(526, 0, 100, 900);
 
 		ofSetColor(186, 251, 174);			//green
 		ofDrawRectangle(726, 0, 100, 900);
 
-		spawn_c.Draw();
-		spawn_c.Move();
-		spawn_r.Draw();
+		// draw shapes
+		for (int i = 0; i < circles.size(); i++) {
+			circles[i].draw();
+		}
+		for (int i = 0; i < rectangles.size(); i++) {
+			rectangles[i].draw();
+		}
+		for (int i = 0; i < triangles.size(); i++) {
+			triangles[i].draw();
+		}
 
-		ofSetColor(174, 217, 251);			//player
-		ofDrawRectangle(xPos, yPos, 40, 40);		//xpos and ypos change from keyPressed, thus they are currently used to change position
+
+		//spawn_c.Draw();
+		//spawn_c.Move();
+		//spawn_r.Draw();
+
+
+
+		//ofSetColor(174, 217, 251);			//player
+		//ofDrawRectangle(xPos, yPos, 40, 40);		//xpos and ypos change from keyPressed, thus they are currently used to change position
 	}
 	else if (game_state == "end") {
 
@@ -97,10 +130,17 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 
 	if (key == OF_KEY_SHIFT) {
-
+		circle newCircle;
+		circles.push_back(newCircle);
+		rectangle newRectangle;
+		rectangles.push_back(newRectangle);
+		triangle newTriangle;
+		triangles.push_back(newTriangle);
 	}
 
+
 	//*************To Move (left, right, up, down)*************//
+	/*
 	if (key == OF_KEY_LEFT) {
 		xPos = xPos - 10;
 	}
@@ -112,7 +152,7 @@ void ofApp::keyPressed(int key){
 	}	
 	if (key == OF_KEY_DOWN) {
 		yPos = yPos + 10;
-	}
+	}*/
 }
 
 //--------------------------------------------------------------

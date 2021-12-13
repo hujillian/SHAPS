@@ -1,5 +1,6 @@
-﻿  ofApp.cpp
+﻿  shapes.cpp
   Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
+     Creating library bin\shaps_debug.lib and object bin\shaps_debug.exp
   shaps.vcxproj -> C:\of_v0.11.2_vs2017_release\apps\myApps\SHAPS\bin\shaps_debug.exe
   
   	                   2	C:\of_v0.11.2_vs2017_release\libs\fmod\lib\vs\Win32\

@@ -3,10 +3,7 @@
 //--------------------------------------------------------------
 shapes::shapes()
 {
-	xPos = 0;
-	yPos = 0;
-	speedX = 0;
-	speedY = 0;
+	
 }
 
 
@@ -27,45 +24,48 @@ shapes::~shapes()
 //--------------------------------------------------------------
 circle::circle()
 {
-	xPos = 375;
-	yPos = 100;
-
+	/*
 	m_position = ofVec2f(xPos, yPos);
 	m_direction = ofVec2f(xPos, 200);
-	m_force = ofVec2f(0, 200);
+	m_force = ofVec2f(0, 200);*/
+	xPos = 375.0;
+	yPos = 0;
+	radius = 35;
+
+	yDirection = 2.0; // moves down
+	yForce = 0; // no force for now
+
+	shapeCol = ofColor(255, 90, 92);
 }
 circle::~circle()
 {
 	//deconstructor
 }
-void circle::Draw()
+void circle::draw()
 {
-	colorOne = (174, 218, 251);			//trying to assign colour
-
-	ofSetColor(174, 218, 251);
-	ofDrawCircle(xPos,yPos,30);
-	m_force = ofVec2f(0, 300);
+	ofSetColor(shapeCol);
+	ofDrawCircle(xPos, yPos, radius);
 }
 
-void circle::Move()
+void circle::update()
 {
-
-	m_position += m_direction; // add the direction to the position value to move the particle
-	m_direction += m_force; // add the force to the direction to change the speed and direction of its motion
-	
+	yPos += yDirection;
+	yDirection += yForce;
 }
 
-void circle::Update()
-{
-	//m_position += m_direction; // add the direction to the position value to move the particle
-	//m_direction += m_force; // add the force to the direction to change the speed and direction of its motion
-}
 
 //--------------------------------------------------------------
 rectangle::rectangle()
 {
-	xPos = 730;
-	yPos = 100;
+	xPos = 745;
+	yPos = 0;
+	width = 60;
+	height = 60;
+
+	yDirection = 2.0; 
+	yForce = 0; 
+
+	shapeCol = ofColor(87, 207, 98);
 }
 
 rectangle::~rectangle()
@@ -73,21 +73,41 @@ rectangle::~rectangle()
 	//deconstructor
 }
 
-void rectangle::Draw()
+void rectangle::draw()
 {
-	ofSetColor(140, 236, 149);
-	ofDrawRectangle(xPos, yPos, 90, 40);
+	ofSetColor(shapeCol);
+	ofDrawRectangle(xPos, yPos, width, height);
+}
+
+void rectangle::update() {
+	yPos += yDirection;
+	yDirection += yForce;
 }
 
 //--------------------------------------------------------------
-void triangle::Draw()
+triangle::triangle()
 {
-	/*colorThree = (174, 218, 251);
-	xPos = 570;
-	yPos = 100;
+	xPos = 540;
+	yPos = 0;
+	width = 70;
 
-	ofSetColor(251, 175, 174);
-	ofDrawTriangle(0,0,0,0,0,0);*/
+	yDirection = 2.0;
+	yForce = 0;
+
+	shapeCol = ofColor(100, 178, 237);
 }
 
+triangle::~triangle() {
+	// deconstructor
+}
 
+void triangle::draw()
+{
+	ofSetColor(shapeCol);
+	ofDrawTriangle(xPos, yPos, xPos + width / 2, yPos - width, xPos + width, yPos);
+}
+
+void triangle::update() {
+	yPos += yDirection;
+	yDirection += yForce;
+}
