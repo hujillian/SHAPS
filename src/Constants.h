@@ -10,7 +10,7 @@ namespace Constants {
 
 	// start page constants
 	const int SHAPS_RECT_X = 350;
-	const int SHAPS_RECT_Y = 200;
+	const int SHAPS_RECT_Y = 201;
 	const int SHAPS_RECT_WIDTH = 600;
 	const int SHAPS_RECT_HEIGHT = 280;
 	const int START_RECT_X = 550;

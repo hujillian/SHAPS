@@ -30,8 +30,8 @@ void ofApp::setup(){
 	drawLeft = false;
 
 	// fonts
-	titleFont.load("raleway-bold.ttf", 120);
-	subtitleFont.load("raleway-bold.ttf", 42);
+	titleFont.load("Bouncy.otf", 120);
+	subtitleFont.load("Bouncy-Thin.otf", 42);
 	textFont.load("raleway-bold.ttf", 20);
 
 	// colours
