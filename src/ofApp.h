@@ -38,6 +38,8 @@ class ofApp : public ofBaseApp{
 		ofVec2f arrowLeftPos;
 		int arrowA;
 		bool arrowAInc;
+		bool drawRight;
+		bool drawLeft;
 
 		// fonts
 		ofTrueTypeFont titleFont;

@@ -19,9 +19,11 @@ void ofApp::setup(){
 	arrowRight.load("arrow-right.png");
 	arrowLeft.load("arrow-left.png");
 	arrowRightPos = ofVec2f(80, 275);
-	//arrowLeftPos = ofVec2f(100, Constants::SHAPS_RECT_Y);
+	arrowLeftPos = ofVec2f(60, Constants::PLAYER_Y);
 	arrowA = 255;
 	arrowAInc = false;
+	drawRight = false;
+	drawLeft = false;
 
 	// fonts
 	titleFont.load("raleway-bold.ttf", 120);
@@ -120,6 +122,9 @@ void ofApp::update(){
 		if ((song.getPositionMS() > 9920 - Constants::SHAPE_MOVE_TIME) &&
 			(song.getPositionMS() < 23744 - Constants::SHAPE_MOVE_TIME)) {
 			spawnTriangles();
+			if ((song.getPositionMS() > 22744)) {
+				drawLeft = true;
+			}
 		}
 		else if ((song.getPositionMS() > 23744 - Constants::SHAPE_MOVE_TIME) && 
 			(song.getPositionMS() < 39509 - Constants::SHAPE_MOVE_TIME)) {
@@ -129,6 +134,10 @@ void ofApp::update(){
 			(song.getPositionMS() < 55168 - Constants::SHAPE_MOVE_TIME)) {
 			spawnTriangles();
 			spawnCircles();
+			if ((song.getPositionMS() > 54000)) {
+				drawLeft = false;
+				drawRight = true;
+			}
 		}
 		else if ((song.getPositionMS() > 55168 - Constants::SHAPE_MOVE_TIME) &&
 			(song.getPositionMS() < 78805 - Constants::SHAPE_MOVE_TIME)) {
@@ -156,11 +165,24 @@ void ofApp::update(){
 
 		// end game when song ends
 		if (song.getPosition() == 1.0f) {
+			arrowRightPos = ofVec2f(80, Constants::PLAY_AGAIN_Y - 20);
 			gameState = Constants::END;
 		}
 	}
 	else if (gameState == Constants::END) {
-
+		// flashing arrow
+		if (arrowAInc) {
+			arrowA += 3;
+			if (arrowA >= 255) {
+				arrowAInc = false;
+			}
+		}
+		else {
+			arrowA -= 3;
+			if (arrowA <= 10) {
+				arrowAInc = true;
+			}
+		}
 	}
 }
 
@@ -212,7 +234,6 @@ void ofApp::draw(){
 		//*************Game Screen Layout Design*************//
 		ofSetColor(mediumBlue);
 		textFont.drawString("score: " + std::to_string(score), Constants::SCREEN_WIDTH - 150, 30);
-		//textFont.drawString(score, Constants::SCREEN_WIDTH - 75, 30);
 
 		// drawing lanes
 		ofSetColor(251, 180, 200); //red
@@ -241,6 +262,15 @@ void ofApp::draw(){
 			triangles[i].draw();
 		}
 
+		// draw arrows
+		ofSetColor(255, 255, 255);
+		if (drawLeft) {
+			arrowLeft.draw(arrowLeftPos);
+		}
+		if (drawRight) {
+			arrowRight.draw(arrowRightPos);
+		}
+
 	}
 	else if (gameState == Constants::END) {
 		ofSetColor(mediumBlue);
@@ -249,26 +279,54 @@ void ofApp::draw(){
 
 		ofSetColor(offWhite);
 		subtitleFont.drawString("PLAY AGAIN", Constants::PLAY_AGAIN_X + 10, Constants::PLAY_AGAIN_Y + 70);
+
+		ofSetColor(255, 255, 255, arrowA);
+		arrowRight.draw(arrowRightPos);
 	}
 
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	
-	// A for circle
-	if (key == 65 || key == 97) { // A or a
-		circlePressed();
-	}
-	// S for triangle
-	if (key == 83 || key == 115) {// S or s
-		trianglePressed();
-	}
-	// D for rectangle
-	if (key == 68 || key == 100) {// D or d
-		rectPressed();
-	}
+	if (gameState == Constants::START) {
+		if (key == 13) { // enter key to select a button
+			// If player presses the START button
+			if (arrowRightPos == ofVec2f(80, 275)) {
+				// instructions
+			}
+			else if (arrowRightPos == ofVec2f(80, Constants::START_RECT_Y - 20)) {
+				gameState = Constants::GAME;
+				song.play();
+			}
+		}
+		if (key == OF_KEY_UP) {
+			arrowRightPos = ofVec2f(80, 275);
+		}
+		if (key == OF_KEY_DOWN) {
+			arrowRightPos = ofVec2f(80, Constants::START_RECT_Y - 20);
 
+		}
+	}
+	else if (gameState == Constants::GAME) {
+		// A for circle
+		if (key == 65 || key == 97) { // A or a
+			circlePressed();
+		}
+		// S for triangle
+		if (key == 83 || key == 115) {// S or s
+			trianglePressed();
+		}
+		// D for rectangle
+		if (key == 68 || key == 100) {// D or d
+			rectPressed();
+		}
+	}
+	else if (gameState == Constants::END) {
+		if (key == 13) { // enter key
+			gameState = Constants::GAME;
+			song.play();
+		}
+	}
 }
 
 void ofApp::circlePressed() {
