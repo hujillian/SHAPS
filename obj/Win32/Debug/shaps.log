@@ -1,6 +1,14 @@
-﻿  shapes.cpp
+﻿  ofApp.cpp
   Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
-     Creating library bin\shaps_debug.lib and object bin\shaps_debug.exp
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(35): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(57): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(75): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(159): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(162): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(165): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(198): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(210): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(222): warning C4018: '<': signed/unsigned mismatch
   shaps.vcxproj -> C:\of_v0.11.2_vs2017_release\apps\myApps\SHAPS\bin\shaps_debug.exe
   
   	                   2	C:\of_v0.11.2_vs2017_release\libs\fmod\lib\vs\Win32\

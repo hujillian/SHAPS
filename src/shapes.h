@@ -6,34 +6,18 @@ public:
 	ofColor shapeCol;
 	float xPos;
 	float yPos;
-
 	float yDirection;
 	float yForce;
-	//float speedY;
-	//float speedX;
+	int shapePressed;
+	bool shrink;
 
-	//ofVec2f m_force;
-	//ofVec2f m_position;
-	//ofVec2f m_direction;
-	ofVec2f force;
-	ofVec2f position;
-	ofVec2f direction;
-
-	//void setup();
-	void update();
-	void draw();
 	shapes();
-	//shapes(int xPos, int yPos);
 	~shapes();
 };
 
 class circle : public shapes {
 public:
-	//void Draw();
-	//void Move();
-	//void Update();
-	
-	int radius;
+	float radius;
 
 	void update();
 	void draw();
@@ -43,8 +27,8 @@ public:
 
 class rectangle : public shapes {
 public:
-	int width;
-	int height;
+	float width;
+	float height;
 
 	void update();
 	void draw();
@@ -54,7 +38,7 @@ public:
 
 class triangle : public shapes {
 public:
-	int width;
+	float width;
 
 	void update();
 	void draw();

@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 shapes::shapes()
 {
-	
+	shapePressed = 0;
+	shrink = false;
 }
 
 
@@ -24,15 +25,11 @@ shapes::~shapes()
 //--------------------------------------------------------------
 circle::circle()
 {
-	/*
-	m_position = ofVec2f(xPos, yPos);
-	m_direction = ofVec2f(xPos, 200);
-	m_force = ofVec2f(0, 200);*/
 	xPos = 375.0;
 	yPos = 0;
 	radius = 35;
 
-	yDirection = 2.0; // moves down
+	yDirection = 1.5; // moves down
 	yForce = 0; // no force for now
 
 	shapeCol = ofColor(255, 90, 92);
@@ -57,12 +54,12 @@ void circle::update()
 //--------------------------------------------------------------
 rectangle::rectangle()
 {
-	xPos = 745;
-	yPos = 0;
 	width = 60;
 	height = 60;
+	xPos = 745;
+	yPos = -1*(height);
 
-	yDirection = 2.0; 
+	yDirection = 1.5; 
 	yForce = 0; 
 
 	shapeCol = ofColor(87, 207, 98);
@@ -91,7 +88,7 @@ triangle::triangle()
 	yPos = 0;
 	width = 70;
 
-	yDirection = 2.0;
+	yDirection = 1.5;
 	yForce = 0;
 
 	shapeCol = ofColor(100, 178, 237);

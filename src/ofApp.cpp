@@ -6,59 +6,110 @@ void ofApp::setup(){
 	//https://openframeworks.cc/ofBook/chapters/game_design.html
 
 	ofSetVerticalSync(true);
-	ofSetWindowShape(1280, 900);
+	ofSetWindowShape(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
 	arduino.connect("COM3", 57600);
 
-	//start position for player
-	xPos = 640;
-	yPos = 700;
-
-	game_state = "start";
+	gameState = Constants::START;
 	score = 0;
 
 	// fonts
 	titleFont.load("raleway-bold.ttf", 120);
 	subtitleFont.load("raleway-bold.ttf", 42);
+	textFont.load("raleway-bold.ttf", 20);
 
-	// start page variables
-	shapsRectX = 350;
-	shapsRectY = 200;
-	shapsRectWidth = 600;
-	shapsRectHeight = 280;
-	startRectX = 550;
-	startRectY = 600;
-	startRectWidth = 200;
-	startRectHeight = 80;
+	// colours
+	lightBlue = ofColor(236, 246, 254);
+	offWhite = ofColor(240, 240, 240);
+	mediumBlue = ofColor(150, 200, 242);
+	
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	if (game_state == "start") {
+	if (gameState == Constants::START) {
 
 	}
-	else if (game_state == "game") {
-		// update circles
-		for (int i = 0; i < circles.size(); i++) {
-			circles[i].update();
+	else if (gameState == Constants::GAME) {
+		// UPDATE CIRCLES
+		for (int i = 0; i < circles.size(); i++) { // circles
 			// if shape moves offscreen, delete it
-			if (circles[i].yPos > ofGetScreenHeight()) {
+			if (circles[i].yPos > Constants::SCREEN_HEIGHT) {
 				//circles[i].erase(circles.begin() + i);
 				//delete circles[i];
 			}
+
+			// circle grows if pressed at the right time, then shrinks
+			if (circles[i].shapePressed >= 1 && !(circles[i].shrink)) {
+				circles[i].radius += 1;
+				if (circles[i].radius > 55) {
+					circles[i].shrink = true;
+				}
+			}
+			else if (circles[i].radius > 35 && circles[i].shrink){
+				circles[i].radius -= 1;
+			}
+
+			circles[i].update();
 		}
 
-		// update rectangles
-		for (int i = 0; i < rectangles.size(); i++) {
+		// UPDATE TRIANGLES
+		for (int i = 0; i < triangles.size(); i++) { // triangles
+			// triangle grows and shrinks
+			if (triangles[i].shapePressed >= 1 && !(triangles[i].shrink)) {
+				triangles[i].width += 1.5;
+				triangles[i].xPos -= 0.8;
+				if (triangles[i].width > 100) {
+					triangles[i].shrink = true;
+				}
+			}
+			else if (triangles[i].width > 70 && triangles[i].shrink) {
+				triangles[i].width -= 1.5;
+				triangles[i].xPos += 0.8;
+			}
+
+			triangles[i].update();
+		}
+
+		// UPDATE RECTANGLES
+		for (int i = 0; i < rectangles.size(); i++) {  // rectangles
+			// rectangle grows and shrinks
+			if (rectangles[i].shapePressed >= 1 && !(rectangles[i].shrink)) {
+				rectangles[i].width += 1;
+				rectangles[i].height += 1;
+				rectangles[i].xPos -= 0.5;
+				if (rectangles[i].width > 80) {
+					rectangles[i].shrink = true;
+				}
+			}
+			else if (rectangles[i].width > 60 && rectangles[i].shrink) {
+				rectangles[i].width -= 1;
+				rectangles[i].height -= 1;
+				rectangles[i].xPos += 0.5;
+			}
+
 			rectangles[i].update();
 		}
 
-		// update triangles
-		for (int i = 0; i < triangles.size(); i++) {
-			triangles[i].update();
+
+		// create rectangles
+		if (ofGetElapsedTimef() > circleTimer + 5) {
+			circle newCircle;
+			circles.push_back(newCircle);
+			circleTimer = ofGetElapsedTimef();
+		}
+		if (ofGetElapsedTimef() > triangleTimer + 3) {
+			triangle newTriangle;
+			triangles.push_back(newTriangle);
+			triangleTimer = ofGetElapsedTimef();
+		}
+		if (ofGetElapsedTimef() > rectTimer + 5) {
+			rectangle newRect;
+			rectangles.push_back(newRect);
+			rectTimer = ofGetElapsedTimef();
 		}
 	}
-	else if (game_state == "end") {
+	else if (gameState == Constants::END) {
 
 	}
 }
@@ -67,35 +118,42 @@ void ofApp::update(){
 void ofApp::draw(){
 	//*************Background*************//
 
-	ofColor colorOne(236, 246, 254);		//lightblue
-	ofColor colorTwo(254, 254, 254);		//white
+	ofBackgroundGradient(lightBlue, offWhite, OF_GRADIENT_LINEAR);
 
-	ofBackgroundGradient(colorOne, colorTwo, OF_GRADIENT_LINEAR);
-
-	if (game_state == "start") {
+	if (gameState == Constants::START) {
 		//*************Start Screen Layout Design*************//
 
-		ofSetColor(174, 217, 251);
-		ofDrawRectRounded(shapsRectX, shapsRectY, shapsRectWidth, shapsRectHeight, 5);
-		ofDrawRectRounded(startRectX, startRectY, startRectWidth, startRectHeight, 5);
+		ofSetColor(mediumBlue);
+		ofDrawRectRounded(Constants::SHAPS_RECT_X, Constants::SHAPS_RECT_Y, Constants::SHAPS_RECT_WIDTH, Constants::SHAPS_RECT_HEIGHT, 5);
+		ofDrawRectRounded(Constants::START_RECT_X, Constants::START_RECT_Y, Constants::START_RECT_WIDTH, Constants::START_RECT_HEIGHT, 5);
 
-		ofSetColor(240, 240, 240);
-		titleFont.drawString("SHAPS!", shapsRectX + 15, shapsRectY + 200);
-		subtitleFont.drawString("START", startRectX + 10, startRectY + 60);
+		ofSetColor(offWhite);
+		titleFont.drawString("SHAPS!", Constants::SHAPS_RECT_X + 15, Constants::SHAPS_RECT_Y + 200);
+		subtitleFont.drawString("START", Constants::START_RECT_X + 10, Constants::START_RECT_Y + 60);
 
 		
 	}
-	else if (game_state == "game") {
+	else if (gameState == Constants::GAME) {
 		//*************Game Screen Layout Design*************//
+		ofSetColor(mediumBlue);
+		textFont.drawString("score: " + std::to_string(score), Constants::SCREEN_WIDTH - 150, 30);
+		//textFont.drawString(score, Constants::SCREEN_WIDTH - 75, 30);
 
-		ofSetColor(251, 180, 200);			//red
-		ofDrawRectangle(326, 0, 100, 900);
+		// drawing lanes
+		ofSetColor(251, 180, 200); //red
+		ofDrawRectangle(Constants::LANE1_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
 
-		ofSetColor(174, 237, 251);			//blue
-		ofDrawRectangle(526, 0, 100, 900);
+		ofSetColor(174, 237, 251); //blue
+		ofDrawRectangle(Constants::LANE2_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
 
-		ofSetColor(186, 251, 174);			//green
-		ofDrawRectangle(726, 0, 100, 900);
+		ofSetColor(186, 251, 174); //green
+		ofDrawRectangle(Constants::LANE3_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
+
+		ofSetColor(offWhite);
+		ofDrawRectangle(Constants::LANE1_X, Constants::PLAYER_Y, Constants::LANE_WIDTH, Constants::PLAYER_HEIGHT);
+		ofDrawRectangle(Constants::LANE2_X, Constants::PLAYER_Y, Constants::LANE_WIDTH, Constants::PLAYER_HEIGHT);
+		ofDrawRectangle(Constants::LANE3_X, Constants::PLAYER_Y, Constants::LANE_WIDTH, Constants::PLAYER_HEIGHT);
+
 
 		// draw shapes
 		for (int i = 0; i < circles.size(); i++) {
@@ -108,17 +166,8 @@ void ofApp::draw(){
 			triangles[i].draw();
 		}
 
-
-		//spawn_c.Draw();
-		//spawn_c.Move();
-		//spawn_r.Draw();
-
-
-
-		//ofSetColor(174, 217, 251);			//player
-		//ofDrawRectangle(xPos, yPos, 40, 40);		//xpos and ypos change from keyPressed, thus they are currently used to change position
 	}
-	else if (game_state == "end") {
+	else if (gameState == Constants::END) {
 
 	}
 
@@ -127,32 +176,58 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
+	
 
-	if (key == OF_KEY_SHIFT) {
-		circle newCircle;
-		circles.push_back(newCircle);
-		rectangle newRectangle;
-		rectangles.push_back(newRectangle);
-		triangle newTriangle;
-		triangles.push_back(newTriangle);
+	// A for circle
+	if (key == 65 || key == 97) { // A or a
+		circlePressed();
+	}
+	// S for triangle
+	if (key == 83 || key == 115) {// S or s
+		trianglePressed();
+	}
+	// D for rectangle
+	if (key == 68 || key == 100) {// D or d
+		rectPressed();
 	}
 
+}
 
-	//*************To Move (left, right, up, down)*************//
-	/*
-	if (key == OF_KEY_LEFT) {
-		xPos = xPos - 10;
+void ofApp::circlePressed() {
+	for (int i = 0; i < circles.size(); i++) {
+		if ((circles[i].yPos > Constants::PLAYER_Y) &&
+			(circles[i].yPos < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT)) {
+			circles[i].shapePressed += 1;
+			if (circles[i].shapePressed == 1) {
+				score += 1;
+			}
+		}
 	}
-	if (key == OF_KEY_RIGHT) {
-		xPos = xPos + 10;
-	}	
-	if (key == OF_KEY_UP) {
-		yPos = yPos - 10;
-	}	
-	if (key == OF_KEY_DOWN) {
-		yPos = yPos + 10;
-	}*/
+}
+
+void ofApp::trianglePressed() {
+	for (int i = 0; i < triangles.size(); i++) {
+		if ((triangles[i].yPos > Constants::PLAYER_Y) &&
+			(triangles[i].yPos < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT)) {
+			triangles[i].shapePressed += 1;
+			if (triangles[i].shapePressed == 1) {
+				score += 1;
+			}
+		}
+	}
+}
+
+void ofApp::rectPressed() {
+	for (int i = 0; i < rectangles.size(); i++) {
+		if ((rectangles[i].yPos + rectangles[i].width > Constants::PLAYER_Y) &&
+			(rectangles[i].yPos + rectangles[i].width < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT)) {
+			rectangles[i].shapePressed += 1;
+			if (rectangles[i].shapePressed == 1) {
+				score += 1;
+			}
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -172,22 +247,22 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	if (game_state == "start") {
+	if (gameState == Constants::START) {
 		// If player presses the SHAPS! button
-		if ((x > shapsRectX) && (x < shapsRectX + shapsRectWidth) &&
-			(y > shapsRectY) && (y < shapsRectY + shapsRectHeight)) {
+		if ((x > Constants::SHAPS_RECT_X) && (x < Constants::SHAPS_RECT_X + Constants::SHAPS_RECT_WIDTH) &&
+			(y > Constants::SHAPS_RECT_Y) && (y < Constants::SHAPS_RECT_Y + Constants::SHAPS_RECT_HEIGHT)) {
 				// instructions?
 			}
 		// If player presses the START button
-		else if ((x > startRectX) && (x < startRectX + startRectWidth) &&
-				(y > startRectY) && (y < startRectY + startRectHeight)) {
-			game_state = "game";
+		else if ((x > Constants::START_RECT_X) && (x < Constants::START_RECT_X + Constants::START_RECT_WIDTH) &&
+				(y > Constants::START_RECT_Y) && (y < Constants::START_RECT_Y + Constants::START_RECT_HEIGHT)) {
+			gameState = Constants::GAME;
 		}
 	}
-	else if (game_state == "game") {
+	else if (gameState == Constants::GAME) {
 
 	}
-	else if (game_state == "end") {
+	else if (gameState == Constants::END) {
 
 	}
 }

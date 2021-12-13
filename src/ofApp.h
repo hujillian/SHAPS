@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include "shapes.h"
+#include "Constants.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,31 +21,29 @@ class ofApp : public ofBaseApp{
 		string buttonState;
 		string potValue;
 
-		string game_state;
-		//string start = "START";
-		//ofTrueTypeFont start;
+		Constants::GAME_STATE gameState;
+
+		//string game_state;
 		int score;
+		int circleTimer;
+		int triangleTimer;
+		int rectTimer;
+		
 
 		// fonts
 		ofTrueTypeFont titleFont;
 		ofTrueTypeFont subtitleFont;
+		ofTrueTypeFont textFont;
 
-		// start page
-		int shapsRectX;
-		int shapsRectY;
-		int shapsRectWidth;
-		int shapsRectHeight;
-		int startRectX;
-		int startRectY;
-		int startRectWidth;
-		int startRectHeight;
+		// colours
+		ofColor lightBlue;
+		ofColor offWhite;
+		ofColor mediumBlue;
 		
 		//player position 
-		float xPos;
-		float yPos;
+		//float xPos;
+		//float yPos;
 
-		//circle spawn_c;
-		//rectangle spawn_r;
 		std::vector<circle> circles;
 		vector<rectangle> rectangles;
 		vector<triangle> triangles;
@@ -52,6 +51,10 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+
+		void circlePressed();
+		void trianglePressed();
+		void rectPressed();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
