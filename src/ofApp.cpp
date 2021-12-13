@@ -13,6 +13,14 @@ void ofApp::setup(){
 	gameState = Constants::START;
 	score = 0;
 
+	song.load("bensound-littleidea.mp3");
+	
+	// arrows
+	arrowRight.load("arrow-right.png");
+	arrowLeft.load("arrow-left.png");
+	arrowRightPos = ofVec2f(100, Constants::SHAPS_RECT_Y);
+	//arrowLeftPos = ofVec2f(100, Constants::SHAPS_RECT_Y);
+
 	// fonts
 	titleFont.load("raleway-bold.ttf", 120);
 	subtitleFont.load("raleway-bold.ttf", 42);
@@ -31,6 +39,7 @@ void ofApp::update(){
 
 	}
 	else if (gameState == Constants::GAME) {
+
 		// UPDATE CIRCLES
 		for (int i = 0; i < circles.size(); i++) { // circles
 			// if shape moves offscreen, delete it
@@ -46,7 +55,7 @@ void ofApp::update(){
 					circles[i].shrink = true;
 				}
 			}
-			else if (circles[i].radius > 35 && circles[i].shrink){
+			else if (circles[i].radius > 35 && circles[i].shrink) {
 				circles[i].radius -= 1;
 			}
 
@@ -90,27 +99,77 @@ void ofApp::update(){
 
 			rectangles[i].update();
 		}
+		
 
+		// create shapes based on times of the song
+		if ((song.getPositionMS() > 9920 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 23744 - Constants::SHAPE_MOVE_TIME)) {
+			spawnTriangles();
+		}
+		else if ((song.getPositionMS() > 23744 - Constants::SHAPE_MOVE_TIME) && 
+			(song.getPositionMS() < 39509 - Constants::SHAPE_MOVE_TIME)) {
+			spawnCircles();
+		}
+		else if ((song.getPositionMS() > 39509 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 55168 - Constants::SHAPE_MOVE_TIME)) {
+			spawnTriangles();
+			spawnCircles();
+		}
+		else if ((song.getPositionMS() > 55168 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 78805 - Constants::SHAPE_MOVE_TIME)) {
+			spawnRects();
+		}
+		else if ((song.getPositionMS() > 78805 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 110293 - Constants::SHAPE_MOVE_TIME)) {
+			spawnTriangles();
+			spawnCircles();
+		}
+		else if ((song.getPositionMS() > 110293 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 134208 - Constants::SHAPE_MOVE_TIME)) {
+			spawnRects();
+			spawnTriangles();
+		}
+		else if ((song.getPositionMS() > 134208 - Constants::SHAPE_MOVE_TIME) &&
+			(song.getPositionMS() < 165000 - Constants::SHAPE_MOVE_TIME)) {
+			spawnTriangles();
+			spawnCircles();
+			spawnRects();
+		}
 
-		// create rectangles
-		if (ofGetElapsedTimef() > circleTimer + 5) {
-			circle newCircle;
-			circles.push_back(newCircle);
-			circleTimer = ofGetElapsedTimef();
-		}
-		if (ofGetElapsedTimef() > triangleTimer + 3) {
-			triangle newTriangle;
-			triangles.push_back(newTriangle);
-			triangleTimer = ofGetElapsedTimef();
-		}
-		if (ofGetElapsedTimef() > rectTimer + 5) {
-			rectangle newRect;
-			rectangles.push_back(newRect);
-			rectTimer = ofGetElapsedTimef();
+		
+		
+
+		// end game when song ends
+		if (song.getPosition() == 1.0f) {
+			gameState = Constants::END;
 		}
 	}
 	else if (gameState == Constants::END) {
 
+	}
+}
+
+void ofApp::spawnCircles() {
+	if (ofGetElapsedTimef() > circleTimer + 4) {
+		circle newCircle;
+		circles.push_back(newCircle);
+		circleTimer = ofGetElapsedTimef();
+	}
+}
+
+void ofApp::spawnTriangles() {
+	if (ofGetElapsedTimef() > triangleTimer + 4) {
+		triangle newTriangle;
+		triangles.push_back(newTriangle);
+		triangleTimer = ofGetElapsedTimef();
+	}
+}
+
+void ofApp::spawnRects() {
+	if (ofGetElapsedTimef() > rectTimer + 2) {
+		rectangle newRect;
+		rectangles.push_back(newRect);
+		rectTimer = ofGetElapsedTimef();
 	}
 }
 
@@ -131,7 +190,7 @@ void ofApp::draw(){
 		titleFont.drawString("SHAPS!", Constants::SHAPS_RECT_X + 15, Constants::SHAPS_RECT_Y + 200);
 		subtitleFont.drawString("START", Constants::START_RECT_X + 10, Constants::START_RECT_Y + 60);
 
-		
+		arrowRight.draw(arrowRightPos);
 	}
 	else if (gameState == Constants::GAME) {
 		//*************Game Screen Layout Design*************//
@@ -168,17 +227,19 @@ void ofApp::draw(){
 
 	}
 	else if (gameState == Constants::END) {
+		ofSetColor(mediumBlue);
+		titleFont.drawString("SCORE: " + std::to_string(score), Constants::SCORE_X, Constants::SCORE_Y);
+		ofDrawRectRounded(Constants::PLAY_AGAIN_X, Constants::PLAY_AGAIN_Y, Constants::PLAY_AGAIN_WIDTH, Constants::PLAY_AGAIN_HEIGHT, 5);
 
+		ofSetColor(offWhite);
+		subtitleFont.drawString("PLAY AGAIN", Constants::PLAY_AGAIN_X + 10, Constants::PLAY_AGAIN_Y + 70);
 	}
-
-
 
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 	
-
 	// A for circle
 	if (key == 65 || key == 97) { // A or a
 		circlePressed();
@@ -253,17 +314,26 @@ void ofApp::mousePressed(int x, int y, int button){
 			(y > Constants::SHAPS_RECT_Y) && (y < Constants::SHAPS_RECT_Y + Constants::SHAPS_RECT_HEIGHT)) {
 				// instructions?
 			}
+
 		// If player presses the START button
 		else if ((x > Constants::START_RECT_X) && (x < Constants::START_RECT_X + Constants::START_RECT_WIDTH) &&
 				(y > Constants::START_RECT_Y) && (y < Constants::START_RECT_Y + Constants::START_RECT_HEIGHT)) {
 			gameState = Constants::GAME;
+			//song.setPosition(0.0f); // restart song
+			song.play();
 		}
 	}
 	else if (gameState == Constants::GAME) {
-
+		std::cout << song.getPositionMS() << std::endl;
 	}
 	else if (gameState == Constants::END) {
-
+		// If player presses the play again button
+		if ((x > Constants::PLAY_AGAIN_X) && (x < Constants::PLAY_AGAIN_X + Constants::PLAY_AGAIN_WIDTH) &&
+			(y > Constants::PLAY_AGAIN_Y) && (y < Constants::PLAY_AGAIN_Y + Constants::PLAY_AGAIN_HEIGHT)) {
+			gameState = Constants::GAME;
+			//song.setPosition(0.0f); // restart song
+			song.play();
+		}
 	}
 }
 

@@ -18,6 +18,14 @@ namespace Constants {
 	const int START_RECT_WIDTH = 200;
 	const int START_RECT_HEIGHT = 80;
 
+	// end page constants
+	const int SCORE_X = 270;
+	const int SCORE_Y = 400;
+	const int PLAY_AGAIN_X = 430;
+	const int PLAY_AGAIN_Y = 550;
+	const int PLAY_AGAIN_WIDTH = 350;
+	const int PLAY_AGAIN_HEIGHT = 100;
+
 	// game constants
 	const int PLAYER_Y = 700;
 	const int PLAYER_HEIGHT = 100;
@@ -25,4 +33,5 @@ namespace Constants {
 	const int LANE2_X = 526;
 	const int LANE3_X = 726;
 	const int LANE_WIDTH = 100;
+	const int SHAPE_MOVE_TIME = 8750;
 }

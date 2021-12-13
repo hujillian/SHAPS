@@ -21,6 +21,8 @@ class ofApp : public ofBaseApp{
 		string buttonState;
 		string potValue;
 
+		ofSoundPlayer song;
+
 		Constants::GAME_STATE gameState;
 
 		//string game_state;
@@ -29,6 +31,11 @@ class ofApp : public ofBaseApp{
 		int triangleTimer;
 		int rectTimer;
 		
+		// arrows
+		ofImage arrowRight;
+		ofImage arrowLeft;
+		ofVec2f arrowRightPos;
+		ofVec2f arrowLeftPos;
 
 		// fonts
 		ofTrueTypeFont titleFont;
@@ -39,10 +46,6 @@ class ofApp : public ofBaseApp{
 		ofColor lightBlue;
 		ofColor offWhite;
 		ofColor mediumBlue;
-		
-		//player position 
-		//float xPos;
-		//float yPos;
 
 		std::vector<circle> circles;
 		vector<rectangle> rectangles;
@@ -55,6 +58,9 @@ class ofApp : public ofBaseApp{
 		void circlePressed();
 		void trianglePressed();
 		void rectPressed();
+		void spawnCircles();
+		void spawnTriangles();
+		void spawnRects();
 
 		void keyPressed(int key);
 		void keyReleased(int key);

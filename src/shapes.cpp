@@ -25,9 +25,9 @@ shapes::~shapes()
 //--------------------------------------------------------------
 circle::circle()
 {
-	xPos = 375.0;
-	yPos = 0;
 	radius = 35;
+	xPos = 375.0;
+	yPos = -1 * (radius);
 
 	yDirection = 1.5; // moves down
 	yForce = 0; // no force for now
@@ -57,7 +57,7 @@ rectangle::rectangle()
 	width = 60;
 	height = 60;
 	xPos = 745;
-	yPos = -1*(height);
+	yPos = -1 * (height);
 
 	yDirection = 1.5; 
 	yForce = 0; 
