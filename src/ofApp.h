@@ -36,6 +36,8 @@ class ofApp : public ofBaseApp{
 		ofImage arrowLeft;
 		ofVec2f arrowRightPos;
 		ofVec2f arrowLeftPos;
+		int arrowA;
+		bool arrowAInc;
 
 		// fonts
 		ofTrueTypeFont titleFont;

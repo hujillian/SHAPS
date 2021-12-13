@@ -18,8 +18,10 @@ void ofApp::setup(){
 	// arrows
 	arrowRight.load("arrow-right.png");
 	arrowLeft.load("arrow-left.png");
-	arrowRightPos = ofVec2f(100, Constants::SHAPS_RECT_Y);
+	arrowRightPos = ofVec2f(80, 275);
 	//arrowLeftPos = ofVec2f(100, Constants::SHAPS_RECT_Y);
+	arrowA = 255;
+	arrowAInc = false;
 
 	// fonts
 	titleFont.load("raleway-bold.ttf", 120);
@@ -36,6 +38,19 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 	if (gameState == Constants::START) {
+		// flashing arrow
+		if (arrowAInc) {
+			arrowA += 3;
+			if (arrowA >= 255) {
+				arrowAInc = false;
+			}
+		}
+		else {
+			arrowA -= 3;
+			if (arrowA <= 10) {
+				arrowAInc = true;
+			}
+		}
 
 	}
 	else if (gameState == Constants::GAME) {
@@ -190,6 +205,7 @@ void ofApp::draw(){
 		titleFont.drawString("SHAPS!", Constants::SHAPS_RECT_X + 15, Constants::SHAPS_RECT_Y + 200);
 		subtitleFont.drawString("START", Constants::START_RECT_X + 10, Constants::START_RECT_Y + 60);
 
+		ofSetColor(255, 255, 255, arrowA);
 		arrowRight.draw(arrowRightPos);
 	}
 	else if (gameState == Constants::GAME) {
