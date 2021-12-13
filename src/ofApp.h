@@ -10,6 +10,8 @@
 class ofApp : public ofBaseApp{
 
 	public:
+
+		//*************Arduino init.*************//
 		ofArduino arduino;
 		bool bSetupArduino;
 
@@ -21,8 +23,12 @@ class ofApp : public ofBaseApp{
 		string buttonState;
 		string potValue;
 
+
+		//*************Song init.*************//
 		ofSoundPlayer song;
 
+
+		//*************Game State init.*************//
 		Constants::GAME_STATE gameState;
 
 		//string game_state;
@@ -31,7 +37,8 @@ class ofApp : public ofBaseApp{
 		int triangleTimer;
 		int rectTimer;
 		
-		// arrows
+
+		//*************Arrows*************//
 		ofImage arrowRight;
 		ofImage arrowLeft;
 		ofVec2f arrowRightPos;
@@ -41,16 +48,20 @@ class ofApp : public ofBaseApp{
 		bool drawRight;
 		bool drawLeft;
 
-		// fonts
+
+		//*************Font*************//
 		ofTrueTypeFont titleFont;
 		ofTrueTypeFont subtitleFont;
 		ofTrueTypeFont textFont;
 
-		// colours
+
+		//*************Colour*************//
 		ofColor lightBlue;
 		ofColor offWhite;
 		ofColor mediumBlue;
 
+
+		//*************Shape Vectors*************//
 		std::vector<circle> circles;
 		vector<rectangle> rectangles;
 		vector<triangle> triangles;
@@ -59,6 +70,8 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
+
+		//*************Functions*************//
 		void circlePressed();
 		void trianglePressed();
 		void rectPressed();

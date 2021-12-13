@@ -1,18 +1,22 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------- setup
 void ofApp::setup(){
 
 	//https://openframeworks.cc/ofBook/chapters/game_design.html
 
+	//setting window
 	ofSetVerticalSync(true);
 	ofSetWindowShape(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
+	//arduino setup
 	arduino.connect("COM3", 57600);
 
+	//game states setup (used to create different pages)
 	gameState = Constants::START;
 	score = 0;
 
+	//song setup
 	song.load("bensound-littleidea.mp3");
 	
 	// arrows
@@ -37,8 +41,10 @@ void ofApp::setup(){
 	
 }
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------- update
 void ofApp::update(){
+
+	//starting page -- arrow flashes update
 	if (gameState == Constants::START) {
 		// flashing arrow
 		if (arrowAInc) {
@@ -55,6 +61,7 @@ void ofApp::update(){
 		}
 
 	}
+	//game page -- if shapes are collected, they grow bigger (then shrink again)
 	else if (gameState == Constants::GAME) {
 
 		// UPDATE CIRCLES
@@ -160,8 +167,6 @@ void ofApp::update(){
 			spawnRects();
 		}
 
-		
-		
 
 		// end game when song ends
 		if (song.getPosition() == 1.0f) {
@@ -169,6 +174,7 @@ void ofApp::update(){
 			gameState = Constants::END;
 		}
 	}
+	//end game state
 	else if (gameState == Constants::END) {
 		// flashing arrow
 		if (arrowAInc) {
@@ -186,6 +192,7 @@ void ofApp::update(){
 	}
 }
 
+//-------------------------------------------------------------- Spawning 
 void ofApp::spawnCircles() {
 	if (ofGetElapsedTimef() > circleTimer + 4) {
 		circle newCircle;
@@ -210,7 +217,7 @@ void ofApp::spawnRects() {
 	}
 }
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------- draw
 void ofApp::draw(){
 	//*************Background*************//
 
@@ -273,6 +280,7 @@ void ofApp::draw(){
 
 	}
 	else if (gameState == Constants::END) {
+		//*************End Screen Layout Design*************//
 		ofSetColor(mediumBlue);
 		titleFont.drawString("SCORE: " + std::to_string(score), Constants::SCORE_X, Constants::SCORE_Y);
 		ofDrawRectRounded(Constants::PLAY_AGAIN_X, Constants::PLAY_AGAIN_Y, Constants::PLAY_AGAIN_WIDTH, Constants::PLAY_AGAIN_HEIGHT, 5);
@@ -288,6 +296,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
+	//*************Start Screen Layout Design*************//
 	if (gameState == Constants::START) {
 		if (key == 13) { // enter key to select a button
 			// If player presses the START button
@@ -307,6 +316,7 @@ void ofApp::keyPressed(int key) {
 
 		}
 	}
+	//*************Game Screen Layout Design*************//
 	else if (gameState == Constants::GAME) {
 		// A for circle
 		if (key == 65 || key == 97) { // A or a
@@ -321,14 +331,16 @@ void ofApp::keyPressed(int key) {
 			rectPressed();
 		}
 	}
+	//*************End Screen Layout Design*************//
 	else if (gameState == Constants::END) {
-		if (key == 13) { // enter key
+		if (key == 13) { // ENTER key
 			gameState = Constants::GAME;
 			song.play();
 		}
 	}
 }
 
+//-------------------------------------------------------------- if shapes pressed
 void ofApp::circlePressed() {
 	for (int i = 0; i < circles.size(); i++) {
 		if ((circles[i].yPos > Constants::PLAYER_Y) &&
@@ -380,8 +392,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 }
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------- moused pressed
 void ofApp::mousePressed(int x, int y, int button){
+	//*************Start Screen Layout Design*************//
 	if (gameState == Constants::START) {
 		// If player presses the SHAPS! button
 		if ((x > Constants::SHAPS_RECT_X) && (x < Constants::SHAPS_RECT_X + Constants::SHAPS_RECT_WIDTH) &&
@@ -397,9 +410,11 @@ void ofApp::mousePressed(int x, int y, int button){
 			song.play();
 		}
 	}
+	//*************Game Screen Layout Design*************//
 	else if (gameState == Constants::GAME) {
 		std::cout << song.getPositionMS() << std::endl;
 	}
+	//*************End Screen Layout Design*************//
 	else if (gameState == Constants::END) {
 		// If player presses the play again button
 		if ((x > Constants::PLAY_AGAIN_X) && (x < Constants::PLAY_AGAIN_X + Constants::PLAY_AGAIN_WIDTH) &&
