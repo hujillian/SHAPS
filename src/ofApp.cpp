@@ -9,8 +9,11 @@ void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetWindowShape(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
-	//arduino setup
-	arduino.connect("COM3", 57600);
+	// arduino setup
+	controller.initialSetup();
+	//ard.connect("COM3", 57600);
+	//ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
+	//bSetupArduino = false;
 
 	//game states setup (used to create different pages)
 	gameState = Constants::START;
@@ -27,22 +30,23 @@ void ofApp::setup(){
 	arrowA = 255;
 	arrowAInc = false;
 	drawRight = false;
-drawLeft = false;
+	drawLeft = false;
 
-// fonts
-titleFont.load("Bouncy.otf", 120);
-subtitleFont.load("Bouncy-Thin.otf", 42);
-textFont.load("raleway-bold.ttf", 20);
+	// fonts
+	titleFont.load("Bouncy.otf", 120);
+	subtitleFont.load("Bouncy-Thin.otf", 42);
+	textFont.load("raleway-bold.ttf", 20);
 
-// colours
-lightBlue = ofColor(236, 246, 254);
-offWhite = ofColor(240, 240, 240);
-mediumBlue = ofColor(150, 200, 242);
+	// colours
+	lightBlue = ofColor(236, 246, 254);
+	offWhite = ofColor(240, 240, 240);
+	mediumBlue = ofColor(150, 200, 242);
 
 }
 
 //-------------------------------------------------------------- update
 void ofApp::update() {
+	controller.updateArduino();
 
 	// STARTING PAGE -- arrow flashes update
 	if (gameState == Constants::START) {
@@ -434,34 +438,4 @@ void ofApp::mousePressed(int x, int y, int button){
 			song.play();
 		}
 	}
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }

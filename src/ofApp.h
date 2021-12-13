@@ -2,26 +2,29 @@
 
 #include "ofMain.h"
 #include "ofEvents.h"
-#include <chrono>
-#include <thread>
+#include "ofEventUtils.h"
 #include "shapes.h"
 #include "Constants.h"
+#include "arduino.h"
+
 
 class ofApp : public ofBaseApp{
-
+	
 	public:
 
 		//*************Arduino init.*************//
-		ofArduino arduino;
+		//arduino controller;
+		//ofArduino arduino;
+		//ofArduino ard;
+		arduino controller;
 		bool bSetupArduino;
+		string buttonState;
+		string potValue;
 
 		void setupArduino(const int & version);
 		void digitalPinChanged(const int & pinNum);
 		void analogPinChanged(const int & pinNum);
 		void updateArduino();
-
-		string buttonState;
-		string potValue;
 
 
 		//*************Song init.*************//
@@ -84,10 +87,4 @@ class ofApp : public ofBaseApp{
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
 };
