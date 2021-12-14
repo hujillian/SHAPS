@@ -64,6 +64,17 @@ void ofApp::update() {
 			}
 		}
 
+		// Arduino joystick
+		if (controller.joystick == "up") { // Shaps button
+			arrowRightPos = ofVec2f(80, 275);
+		}
+		else if (controller.joystick == "down") { // Start button
+			arrowRightPos = ofVec2f(80, Constants::START_RECT_Y - 20);
+			if (controller.joystickPressed) {
+				startGame();
+			}
+		}
+
 	}
 
 	// GAME PAGE -- if shapes are collected, they grow bigger (then shrink again)
@@ -177,11 +188,21 @@ void ofApp::update() {
 		}
 
 
-
 		// ENG GAME
 		if (song.getPosition() == 1.0f) { // song ends
 			arrowRightPos = ofVec2f(80, Constants::PLAY_AGAIN_Y - 20);
 			gameState = Constants::END;
+		}
+
+		// Check Arduino buttons
+		if (controller.redButtonPressed) {
+			circlePressed();
+		}
+		if (controller.blueButtonPressed) {
+			trianglePressed();
+		}
+		if (controller.greenButtonPressed) {
+			rectPressed();
 		}
 	}
 
@@ -307,17 +328,16 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	//*************Start Screen Layout Design*************//
+	//*************Start Screen Actions*************//
+	
 	if (gameState == Constants::START) {
-		if (key == 13) { // enter key to select a button
+		/*if (key == 13) { // enter key to select a button
 			// If player presses the START button
 			if (arrowRightPos == ofVec2f(80, 275)) {
 				// instructions
 			}
 			else if (arrowRightPos == ofVec2f(80, Constants::START_RECT_Y - 20)) {
-				gameState = Constants::GAME;
-				song.play();
-				arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
+				startGame();
 			}
 		}
 		if (key == OF_KEY_UP) {
@@ -326,9 +346,9 @@ void ofApp::keyPressed(int key) {
 		if (key == OF_KEY_DOWN) {
 			arrowRightPos = ofVec2f(80, Constants::START_RECT_Y - 20);
 
-		}
+		}*/
 	}
-	//*************Game Screen Layout Design*************//
+	//*************Game Screen Actions*************//
 	else if (gameState == Constants::GAME) {
 		// A for circle
 		if (key == 65 || key == 97) { // A or a
@@ -343,7 +363,7 @@ void ofApp::keyPressed(int key) {
 			rectPressed();
 		}
 	}
-	//*************End Screen Layout Design*************//
+	//*************End Screen Actions*************//
 	else if (gameState == Constants::END) {
 		if (key == 13) { // ENTER key
 			gameState = Constants::GAME;
@@ -351,6 +371,13 @@ void ofApp::keyPressed(int key) {
 			arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
 		}
 	}
+}
+
+void ofApp::startGame() {
+	gameState = Constants::GAME;
+	song.setPosition(0.0f); // restart song
+	song.play();
+	arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
 }
 
 //-------------------------------------------------------------- if shapes pressed
@@ -361,6 +388,7 @@ void ofApp::circlePressed() {
 			circles[i].shapePressed += 1;
 			if (circles[i].shapePressed == 1) {
 				score += 1;
+				controller.lightOn("red");
 			}
 		}
 	}
@@ -373,6 +401,7 @@ void ofApp::trianglePressed() {
 			triangles[i].shapePressed += 1;
 			if (triangles[i].shapePressed == 1) {
 				score += 1;
+				controller.lightOn("blue");
 			}
 		}
 	}
@@ -385,6 +414,7 @@ void ofApp::rectPressed() {
 			rectangles[i].shapePressed += 1;
 			if (rectangles[i].shapePressed == 1) {
 				score += 1;
+				controller.lightOn("green");
 			}
 		}
 	}

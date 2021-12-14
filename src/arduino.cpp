@@ -5,6 +5,12 @@ void arduino::initialSetup() {
 	ard.connect("COM3", 57600);
 	ofAddListener(ard.EInitialized, this, &arduino::setupArduino);
 	bSetupArduino = false;
+
+	redButtonPressed = false;
+	blueButtonPressed = false;
+	greenButtonPressed = false;
+	joystick = "up";
+	joystickPressed = false;
 }
 
 //--------------------------------------------------------------
@@ -20,6 +26,7 @@ void arduino::setupArduino(const int & version) {
 	ard.sendAnalogPinReporting(0, ARD_ANALOG);
 	ard.sendAnalogPinReporting(5, ARD_ANALOG); // not sure if this is right
 	ard.sendDigitalPinMode(8, ARD_INPUT);
+	ard.sendDigital(8, ARD_LOW);
 
 	// set pins 2, 4, 6, 7, to digital input
 	ard.sendDigitalPinMode(2, ARD_INPUT);
@@ -39,55 +46,78 @@ void arduino::setupArduino(const int & version) {
 
 //--------------------------------------------------------------
 void arduino::updateArduino() {
-
-	// update the arduino, get any data or messages.
-	// the call to ard.update() is required
 	ard.update();
 
 	ofSetColor(255, 255, 255);
 	// do not send anything until the arduino has been set up
 	if (bSetupArduino) {
-		// fade the led connected to pin D11
-		//ard.sendPwm(10, (int)(128 + 128 * sin(ofGetElapsedTimef())));   // pwm...
 
 		// button with red light
 		if (ard.getDigital(2)) {
-			ard.sendDigital(10, ARD_HIGH);
+			redButtonPressed = true;
 		}
 		else {
+			redButtonPressed = false;
 			ard.sendDigital(10, ARD_LOW);
 		}
+		// button with blue light
 		if (ard.getDigital(4)) {
-			ard.sendDigital(12, ARD_HIGH);
+			blueButtonPressed = true;
 		}
 		else {
 			ard.sendDigital(12, ARD_LOW);
+			blueButtonPressed = false;
 		}
+		// button with green light
 		if (ard.getDigital(7)) {
-			ard.sendDigital(13, ARD_HIGH);
+			greenButtonPressed = true;
 		}
 		else {
 			ard.sendDigital(13, ARD_LOW);
+			greenButtonPressed = false;
 		}
 
 		// tilt switch with blue light 
 		if (ard.getDigital(6)) {
-			ard.sendDigital(12, ARD_HIGH);
+			//ard.sendDigital(12, ARD_HIGH);
 		}
 		else {
-			ard.sendDigital(12, ARD_LOW);
+			//ard.sendDigital(12, ARD_LOW);
 		}
 
 		// joystick
-		std::cout << ard.getAnalog(0) << " ," << ard.getAnalog(5) << std::endl;
-		if (ard.getAnalog(5) < 480) {
-			//ard.sendDigital(13, ARD_HIGH);
-			std::cout << "left\n";
+		//std::cout << ard.getAnalog(0) << " ," << ard.getAnalog(5) << std::endl;
+		if (ard.getAnalog(5) < 0) {// initial value
+			joystick = "up";
 		}
-		else if (ard.getAnalog(5) > 530) {
-			//ard.sendDigital(13, ARD_LOW);
-			std::cout << "right\n";
+		else if (ard.getAnalog(5) < 480) { // down
+			joystick = "down";
+			
 		}
+		else if (ard.getAnalog(5) > 535) { // up
+			joystick = "up";
+		}
+		// joystick button
+		if (ard.getDigital(8)) {
+			joystickPressed = true;
+			cout << "yes pressed\n";
+		}
+		else {
+			joystickPressed = false;
+			cout << "not pressed\n";
+		}
+	}
+}
+
+void arduino::lightOn(std::string lightCol) {
+	if (lightCol == "red") {
+		ard.sendDigital(10, ARD_HIGH);
+	}
+	else if (lightCol == "blue") {
+		ard.sendDigital(12, ARD_HIGH);
+	}
+	else if (lightCol == "green") {
+		ard.sendDigital(13, ARD_HIGH);
 	}
 }
 

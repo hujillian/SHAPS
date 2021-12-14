@@ -82,6 +82,8 @@ class ofApp : public ofBaseApp{
 		void spawnTriangles(int spawnTime);
 		void spawnRects(int spawnTime);
 
+		void startGame();
+
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
