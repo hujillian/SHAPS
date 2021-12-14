@@ -89,14 +89,15 @@ void arduino::updateArduino() {
 		}
 
 		//--------------JOYSTICK----------------------
+		cout << ard.getAnalog(5) << endl;
 		if (ard.getAnalog(5) < 0) {// initial value
 			joystick = "up";
 		}
-		else if (ard.getAnalog(5) < 480) { // down
+		else if (ard.getAnalog(5) < 400) { // down
 			joystick = "down";
 			
 		}
-		else if (ard.getAnalog(5) > 535) { // up
+		else if (ard.getAnalog(5) > 550) { // up
 			joystick = "up";
 		}
 		// joystick button

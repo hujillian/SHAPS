@@ -97,10 +97,10 @@ void ofApp::update() {
 		// UPDATE CIRCLES
 		for (int i = 0; i < circles.size(); i++) { // circles
 			// if shape moves offscreen, delete it
-			if (circles[i].yPos > Constants::SCREEN_HEIGHT) {
+			//if (circles[i].yPos > Constants::SCREEN_HEIGHT) {
 				//circles[i].erase(circles.begin() + i);
 				//delete circles[i];
-			}
+			//}
 
 			// circle grows if pressed at the right time, then shrinks
 			if (circles[i].shapePressed >= 1 && !(circles[i].shrink)) {
@@ -183,7 +183,7 @@ void ofApp::update() {
 		else if (song.getPositionMS() < 110293 - Constants::SHAPE_MOVE_TIME) {
 			spawnTriangles(4.6);
 			spawnCircles(2.3);
-			if ((song.getPositionMS() > 75305)) {
+			if ((song.getPositionMS() > 76305)) {
 				drawRight = false;
 				drawLeft = true;
 			}
@@ -199,6 +199,10 @@ void ofApp::update() {
 		else if (song.getPositionMS() < 165000 - Constants::SHAPE_MOVE_TIME) {
 			spawnTriangles(9.2);
 			spawnRects(4.6);
+			if ((song.getPositionMS() > 135708)) {
+				drawLeft = false;
+				drawRight = true;
+			}
 		}
 
 
@@ -308,13 +312,26 @@ void ofApp::draw(){
 		textFont.drawString("score: " + std::to_string(score), Constants::SCREEN_WIDTH - 150, 30);
 
 		// drawing lanes
-		ofSetColor(251, 180, 200); //red
+		//red
+		if (controller.tilted == "left") {
+			ofSetColor(251, 180, 200, 255); 
+		}
+		else {
+			ofSetColor(251, 180, 200, 100);
+		}
 		ofDrawRectangle(Constants::LANE1_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
-
-		ofSetColor(174, 237, 251); //blue
+		
+		//blue
+		ofSetColor(174, 237, 251); 
 		ofDrawRectangle(Constants::LANE2_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
-
-		ofSetColor(186, 251, 174); //green
+		
+		//green
+		if (controller.tilted == "right") {
+			ofSetColor(186, 251, 174, 255);
+		}
+		else {
+			ofSetColor(186, 251, 174, 100);
+		}
 		ofDrawRectangle(Constants::LANE3_X, 0, Constants::LANE_WIDTH, Constants::SCREEN_HEIGHT);
 
 		ofSetColor(offWhite);
