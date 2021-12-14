@@ -11,9 +11,6 @@ void ofApp::setup(){
 
 	// arduino setup
 	controller.initialSetup();
-	//ard.connect("COM3", 57600);
-	//ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
-	//bSetupArduino = false;
 
 	//game states setup (used to create different pages)
 	gameState = Constants::START;
@@ -318,10 +315,14 @@ void ofApp::draw(){
 		ofDrawRectRounded(Constants::PLAY_AGAIN_X, Constants::PLAY_AGAIN_Y, Constants::PLAY_AGAIN_WIDTH, Constants::PLAY_AGAIN_HEIGHT, 5);
 
 		ofSetColor(offWhite);
-		subtitleFont.drawString("PLAY AGAIN", Constants::PLAY_AGAIN_X + 10, Constants::PLAY_AGAIN_Y + 70);
+		subtitleFont.drawString("PLAY AGAIN", Constants::PLAY_AGAIN_X + 15, Constants::PLAY_AGAIN_Y + 70);
 
 		ofSetColor(255, 255, 255, arrowA);
 		arrowRight.draw(arrowRightPos);
+
+		if (controller.joystickPressed) {
+			startGame();
+		}
 	}
 
 }
@@ -362,12 +363,21 @@ void ofApp::keyPressed(int key) {
 		if (key == 68 || key == 100) {// D or d
 			rectPressed();
 		}
+
+		// Arrows instead of the tilt switch
+		if (key == OF_KEY_LEFT) {
+			controller.tilted = "left";
+		}
+		if (key == OF_KEY_RIGHT) {
+			controller.tilted = "right";
+		}
 	}
 	//*************End Screen Actions*************//
 	else if (gameState == Constants::END) {
+		/*
 		if (key == 13) { // ENTER key
 			startGame();
-		}
+		}*/
 	}
 }
 
@@ -376,13 +386,16 @@ void ofApp::startGame() {
 	song.setPosition(0.0f); // restart song
 	song.play();
 	arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
+	drawRight = false;
+	drawLeft = false;
 }
 
 //-------------------------------------------------------------- if shapes pressed
 void ofApp::circlePressed() {
 	for (int i = 0; i < circles.size(); i++) {
 		if ((circles[i].yPos > Constants::PLAYER_Y) &&
-			(circles[i].yPos < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT)) {
+			(circles[i].yPos < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT) &&
+			(controller.tilted == "left")) {
 			circles[i].shapePressed += 1;
 			if (circles[i].shapePressed == 1) {
 				score += 1;
@@ -408,7 +421,8 @@ void ofApp::trianglePressed() {
 void ofApp::rectPressed() {
 	for (int i = 0; i < rectangles.size(); i++) {
 		if ((rectangles[i].yPos + rectangles[i].width > Constants::PLAYER_Y) &&
-			(rectangles[i].yPos + rectangles[i].width < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT)) {
+			(rectangles[i].yPos + rectangles[i].width < Constants::PLAYER_Y + Constants::PLAYER_HEIGHT) &&
+			(controller.tilted == "right")) {
 			rectangles[i].shapePressed += 1;
 			if (rectangles[i].shapePressed == 1) {
 				score += 1;

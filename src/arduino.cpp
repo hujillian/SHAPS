@@ -2,14 +2,17 @@
 
 //--------------------------------------------------------------
 void arduino::initialSetup() {
+	// setup arduino
 	ard.connect("COM3", 57600);
 	ofAddListener(ard.EInitialized, this, &arduino::setupArduino);
 	bSetupArduino = false;
 
+	// init variables
 	redButtonPressed = false;
 	blueButtonPressed = false;
 	greenButtonPressed = false;
 	joystick = "up";
+	tilted = "left";
 	joystickPressed = false;
 }
 
@@ -24,9 +27,8 @@ void arduino::setupArduino(const int & version) {
 
 	// set pins A0 and A5 to analog, and 8 to digital input
 	ard.sendAnalogPinReporting(0, ARD_ANALOG);
-	ard.sendAnalogPinReporting(5, ARD_ANALOG); // not sure if this is right
-	ard.sendDigitalPinMode(8, ARD_INPUT);
-	ard.sendDigital(8, ARD_LOW);
+	ard.sendAnalogPinReporting(5, ARD_ANALOG); 
+	ard.sendAnalogPinReporting(1, ARD_ANALOG); // digital wasn't working with openframeworks
 
 	// set pins 2, 4, 6, 7, to digital input
 	ard.sendDigitalPinMode(2, ARD_INPUT);
@@ -52,6 +54,7 @@ void arduino::updateArduino() {
 	// do not send anything until the arduino has been set up
 	if (bSetupArduino) {
 
+		//---------BUTTONS---------------
 		// button with red light
 		if (ard.getDigital(2)) {
 			redButtonPressed = true;
@@ -77,16 +80,15 @@ void arduino::updateArduino() {
 			greenButtonPressed = false;
 		}
 
-		// tilt switch with blue light 
+		//-------------TILT SWITCH--------------------
 		if (ard.getDigital(6)) {
-			//ard.sendDigital(12, ARD_HIGH);
+			tilted = "right";
 		}
 		else {
-			//ard.sendDigital(12, ARD_LOW);
+			tilted = "left";
 		}
 
-		// joystick
-		//std::cout << ard.getAnalog(0) << " ," << ard.getAnalog(5) << std::endl;
+		//--------------JOYSTICK----------------------
 		if (ard.getAnalog(5) < 0) {// initial value
 			joystick = "up";
 		}
@@ -98,13 +100,15 @@ void arduino::updateArduino() {
 			joystick = "up";
 		}
 		// joystick button
-		if (ard.getDigital(8)) {
+		cout << ard.getAnalog(1) << endl;
+		if (ard.getAnalog(1) < 0) {
+			// -1 in the beginning
+		}
+		else if (ard.getAnalog(1) < 35) {
 			joystickPressed = true;
-			cout << "yes pressed\n";
 		}
 		else {
 			joystickPressed = false;
-			cout << "not pressed\n";
 		}
 	}
 }

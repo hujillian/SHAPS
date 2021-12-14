@@ -13,18 +13,7 @@ class ofApp : public ofBaseApp{
 	public:
 
 		//*************Arduino init.*************//
-		//arduino controller;
-		//ofArduino arduino;
-		//ofArduino ard;
 		arduino controller;
-		bool bSetupArduino;
-		string buttonState;
-		string potValue;
-
-		void setupArduino(const int & version);
-		void digitalPinChanged(const int & pinNum);
-		void analogPinChanged(const int & pinNum);
-		void updateArduino();
 
 
 		//*************Song init.*************//

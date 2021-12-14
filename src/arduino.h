@@ -8,14 +8,15 @@ public:
 	//*************Arduino init.*************//
 	ofArduino ard;
 	bool bSetupArduino;
-	string buttonState;
-	string potValue;
+	std::string buttonState;
+	std::string potValue;
 
 	bool redButtonPressed;
 	bool blueButtonPressed;
 	bool greenButtonPressed;
-	string joystick;
+	std::string joystick;
 	bool joystickPressed;
+	std::string tilted;
 
 	void initialSetup();
 	void setupArduino(const int & version);
