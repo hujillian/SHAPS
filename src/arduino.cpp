@@ -100,7 +100,7 @@ void arduino::updateArduino() {
 			joystick = "up";
 		}
 		// joystick button
-		cout << ard.getAnalog(1) << endl;
+		//cout << ard.getAnalog(1) << endl;
 		if (ard.getAnalog(1) < 0) {
 			// -1 in the beginning
 		}

@@ -23,7 +23,8 @@ void ofApp::setup(){
 	arrowRight.load("arrow-right.png");
 	arrowLeft.load("arrow-left.png");
 	arrowRightPos = ofVec2f(80, 275);
-	arrowLeftPos = ofVec2f(60, Constants::PLAYER_Y);
+	arrowLeftPos = ofVec2f(250, 15);
+	//arrowLeftPos = ofVec2f(60, Constants::PLAYER_Y);
 	arrowA = 255;
 	arrowAInc = false;
 	drawRight = false;
@@ -38,6 +39,8 @@ void ofApp::setup(){
 	lightBlue = ofColor(236, 246, 254);
 	offWhite = ofColor(240, 240, 240);
 	mediumBlue = ofColor(150, 200, 242);
+
+	drawInstructions = false;
 
 }
 
@@ -61,16 +64,30 @@ void ofApp::update() {
 			}
 		}
 
-		// Arduino joystick
-		if (controller.joystick == "up") { // Shaps button
-			arrowRightPos = ofVec2f(80, 275);
-		}
-		else if (controller.joystick == "down") { // Start button
-			arrowRightPos = ofVec2f(80, Constants::START_RECT_Y - 20);
-			if (controller.joystickPressed) {
-				startGame();
+		// Arduino joystick -- selecting on the menu
+		if (!drawInstructions) {
+			if (controller.joystick == "up") { // Shaps button
+				arrowRightPos = ofVec2f(80, 275);
+				if (controller.joystickPressed) {
+					drawInstructions = true;
+					ofSleepMillis(500); // small pause
+				}
+			}
+			else if (controller.joystick == "down") { // Start button
+				arrowRightPos = ofVec2f(80, Constants::START_RECT_Y - 20);
+				if (controller.joystickPressed) {
+					startGame();
+					ofSleepMillis(500); // small pause
+				}
 			}
 		}
+		else {
+			if (controller.joystickPressed) {
+				drawInstructions = false;
+				ofSleepMillis(500); // small pause
+			}
+		}
+		
 
 	}
 
@@ -249,22 +266,41 @@ void ofApp::spawnRects(int spawnTime) {
 //-------------------------------------------------------------- draw
 void ofApp::draw(){
 	//*************Background*************//
-
 	ofBackgroundGradient(lightBlue, offWhite, OF_GRADIENT_LINEAR);
 
 	if (gameState == Constants::START) {
 		//*************Start Screen Layout Design*************//
+		if (drawInstructions) {
+			ofSetColor(mediumBlue);
+			ofDrawRectRounded(30, 30, Constants::START_RECT_WIDTH, Constants::START_RECT_HEIGHT, 5);
 
-		ofSetColor(mediumBlue);
-		ofDrawRectRounded(Constants::SHAPS_RECT_X, Constants::SHAPS_RECT_Y, Constants::SHAPS_RECT_WIDTH, Constants::SHAPS_RECT_HEIGHT, 5);
-		ofDrawRectRounded(Constants::START_RECT_X, Constants::START_RECT_Y, Constants::START_RECT_WIDTH, Constants::START_RECT_HEIGHT, 5);
+			subtitleFont.drawString("INSTRUCTIONS", 420, 280);
+			textFont.drawString("Press the buttons to catch the shapes", 370, 380);
+			textFont.drawString("Tilt the controller left for the left lane", 370, 420);
+			textFont.drawString("Tilt the controller right for the right lane", 370, 460);
 
-		ofSetColor(offWhite);
-		titleFont.drawString("SHAPS!", Constants::SHAPS_RECT_X + 15, Constants::SHAPS_RECT_Y + 200);
-		subtitleFont.drawString("START", Constants::START_RECT_X + 10, Constants::START_RECT_Y + 60);
+			textFont.drawString("On desktop:", 370, 560);
+			textFont.drawString("Use A, S, D as buttons", 370, 600);
+			textFont.drawString("Left and Right arrow keys as tilt", 370, 640);
 
-		ofSetColor(255, 255, 255, arrowA);
-		arrowRight.draw(arrowRightPos);
+			ofSetColor(offWhite);
+			subtitleFont.drawString("BACK", 60, 90);
+
+			ofSetColor(255, 255, 255, arrowA);
+			arrowLeft.draw(arrowLeftPos);
+		}
+		else {
+			ofSetColor(mediumBlue);
+			ofDrawRectRounded(Constants::SHAPS_RECT_X, Constants::SHAPS_RECT_Y, Constants::SHAPS_RECT_WIDTH, Constants::SHAPS_RECT_HEIGHT, 5);
+			ofDrawRectRounded(Constants::START_RECT_X, Constants::START_RECT_Y, Constants::START_RECT_WIDTH, Constants::START_RECT_HEIGHT, 5);
+
+			ofSetColor(offWhite);
+			titleFont.drawString("SHAPS!", Constants::SHAPS_RECT_X + 15, Constants::SHAPS_RECT_Y + 200);
+			subtitleFont.drawString("START", Constants::START_RECT_X + 10, Constants::START_RECT_Y + 60);
+
+			ofSetColor(255, 255, 255, arrowA);
+			arrowRight.draw(arrowRightPos);
+		}
 	}
 	else if (gameState == Constants::GAME) {
 		//*************Game Screen Layout Design*************//
@@ -386,8 +422,15 @@ void ofApp::startGame() {
 	song.setPosition(0.0f); // restart song
 	song.play();
 	arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
+	arrowLeftPos = ofVec2f(60, Constants::PLAYER_Y);
 	drawRight = false;
 	drawLeft = false;
+}
+
+void ofApp::instructionsPage() {
+	//ofBackgroundGradient(lightBlue, offWhite, OF_GRADIENT_LINEAR);
+
+	
 }
 
 //-------------------------------------------------------------- if shapes pressed
@@ -432,40 +475,35 @@ void ofApp::rectPressed() {
 	}
 }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
 //-------------------------------------------------------------- moused pressed
 void ofApp::mousePressed(int x, int y, int button){
 	//*************Start Screen Layout Design*************//
 	if (gameState == Constants::START) {
-		// If player presses the SHAPS! button
-		if ((x > Constants::SHAPS_RECT_X) && (x < Constants::SHAPS_RECT_X + Constants::SHAPS_RECT_WIDTH) &&
-			(y > Constants::SHAPS_RECT_Y) && (y < Constants::SHAPS_RECT_Y + Constants::SHAPS_RECT_HEIGHT)) {
-				// instructions?
+		if (!drawInstructions) {
+			// If player presses the SHAPS! button
+			if ((x > Constants::SHAPS_RECT_X) && (x < Constants::SHAPS_RECT_X + Constants::SHAPS_RECT_WIDTH) &&
+				(y > Constants::SHAPS_RECT_Y) && (y < Constants::SHAPS_RECT_Y + Constants::SHAPS_RECT_HEIGHT)) {
+				drawInstructions = true;
 			}
 
-		// If player presses the START button
-		else if ((x > Constants::START_RECT_X) && (x < Constants::START_RECT_X + Constants::START_RECT_WIDTH) &&
+			// If player presses the START button
+			else if ((x > Constants::START_RECT_X) && (x < Constants::START_RECT_X + Constants::START_RECT_WIDTH) &&
 				(y > Constants::START_RECT_Y) && (y < Constants::START_RECT_Y + Constants::START_RECT_HEIGHT)) {
-			startGame();
+				startGame();
+			}
+		}
+		else {
+			// If player presses the BACK button
+			if ((x > 30) && (x < 30 + Constants::START_RECT_WIDTH) &&
+				(y > 30) && (y < 30 + Constants::START_RECT_HEIGHT)) {
+				drawInstructions = false;
+			}
+
 		}
 	}
 	//*************Game Screen Layout Design*************//
 	else if (gameState == Constants::GAME) {
-		std::cout << song.getPositionMS() << std::endl;
+		
 	}
 	//*************End Screen Layout Design*************//
 	else if (gameState == Constants::END) {

@@ -22,8 +22,6 @@ class ofApp : public ofBaseApp{
 
 		//*************Game State init.*************//
 		Constants::GAME_STATE gameState;
-
-		//string game_state;
 		int score;
 		int circleTimer;
 		int triangleTimer;
@@ -58,6 +56,8 @@ class ofApp : public ofBaseApp{
 		vector<rectangle> rectangles;
 		vector<triangle> triangles;
 
+		bool drawInstructions;
+
 		void setup();
 		void update();
 		void draw();
@@ -72,10 +72,8 @@ class ofApp : public ofBaseApp{
 		void spawnRects(int spawnTime);
 
 		void startGame();
+		void instructionsPage();
 
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 };
