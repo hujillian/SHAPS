@@ -366,9 +366,7 @@ void ofApp::keyPressed(int key) {
 	//*************End Screen Actions*************//
 	else if (gameState == Constants::END) {
 		if (key == 13) { // ENTER key
-			gameState = Constants::GAME;
-			song.play();
-			arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
+			startGame();
 		}
 	}
 }
@@ -448,10 +446,7 @@ void ofApp::mousePressed(int x, int y, int button){
 		// If player presses the START button
 		else if ((x > Constants::START_RECT_X) && (x < Constants::START_RECT_X + Constants::START_RECT_WIDTH) &&
 				(y > Constants::START_RECT_Y) && (y < Constants::START_RECT_Y + Constants::START_RECT_HEIGHT)) {
-			gameState = Constants::GAME;
-			//song.setPosition(0.0f); // restart song
-			song.play();
-			arrowRightPos = ofVec2f(880, Constants::PLAYER_Y);
+			startGame();
 		}
 	}
 	//*************Game Screen Layout Design*************//
@@ -463,9 +458,7 @@ void ofApp::mousePressed(int x, int y, int button){
 		// If player presses the play again button
 		if ((x > Constants::PLAY_AGAIN_X) && (x < Constants::PLAY_AGAIN_X + Constants::PLAY_AGAIN_WIDTH) &&
 			(y > Constants::PLAY_AGAIN_Y) && (y < Constants::PLAY_AGAIN_Y + Constants::PLAY_AGAIN_HEIGHT)) {
-			gameState = Constants::GAME;
-			song.setPosition(0.0f); // restart song
-			song.play();
+			startGame();
 		}
 	}
 }

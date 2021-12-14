@@ -1,5 +1,20 @@
 ﻿  arduino.cpp
+  main.cpp
+  ofApp.cpp
+  shapes.cpp
   Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
+  Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
+  Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
+  Info: Boost.Config is older than your compiler version - probably nothing bad will happen - but you may wish to look for an update Boost version.  Define BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE to suppress this message.
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(84): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(106): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(124): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(294): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(297): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(300): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(383): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(396): warning C4018: '<': signed/unsigned mismatch
+c:\of_v0.11.2_vs2017_release\apps\myapps\shaps\src\ofapp.cpp(409): warning C4018: '<': signed/unsigned mismatch
   SHAPS.vcxproj -> C:\of_v0.11.2_vs2017_release\apps\myApps\SHAPS\bin\SHAPS_debug.exe
   
   	                   2	C:\of_v0.11.2_vs2017_release\libs\fmod\lib\vs\Win32\
