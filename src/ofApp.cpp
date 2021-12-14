@@ -33,9 +33,9 @@ void ofApp::setup(){
 	drawLeft = false;
 
 	// fonts
-	titleFont.load("Bouncy.otf", 120);
-	subtitleFont.load("Bouncy-Thin.otf", 42);
-	textFont.load("raleway-bold.ttf", 20);
+	titleFont.load("Happy School.otf", 120);
+	subtitleFont.load("Happy School.otf", 42);
+	textFont.load("Happy School.otf", 20);
 
 	// colours
 	lightBlue = ofColor(236, 246, 254);
