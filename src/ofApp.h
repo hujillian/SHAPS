@@ -72,7 +72,6 @@ class ofApp : public ofBaseApp{
 		void spawnRects(int spawnTime);
 
 		void startGame();
-		void instructionsPage();
 
 		void keyPressed(int key);
 		void mousePressed(int x, int y, int button);

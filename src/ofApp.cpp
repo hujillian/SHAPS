@@ -442,12 +442,7 @@ void ofApp::startGame() {
 	arrowLeftPos = ofVec2f(60, Constants::PLAYER_Y);
 	drawRight = false;
 	drawLeft = false;
-}
-
-void ofApp::instructionsPage() {
-	//ofBackgroundGradient(lightBlue, offWhite, OF_GRADIENT_LINEAR);
-
-	
+	score = 0;
 }
 
 //-------------------------------------------------------------- if shapes pressed

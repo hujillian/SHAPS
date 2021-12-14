@@ -12,7 +12,7 @@ void arduino::initialSetup() {
 	blueButtonPressed = false;
 	greenButtonPressed = false;
 	joystick = "up";
-	tilted = "left";
+	tilted = "";
 	joystickPressed = false;
 }
 
@@ -89,7 +89,7 @@ void arduino::updateArduino() {
 		}
 
 		//--------------JOYSTICK----------------------
-		cout << ard.getAnalog(5) << endl;
+		//cout << ard.getAnalog(5) << endl;
 		if (ard.getAnalog(5) < 0) {// initial value
 			joystick = "up";
 		}
